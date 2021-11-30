@@ -1,0 +1,7 @@
+
+C05.code-workspace
+_ARCHIVE
+node_modules
+package-lock.json
+.vscode
+.DS_Store

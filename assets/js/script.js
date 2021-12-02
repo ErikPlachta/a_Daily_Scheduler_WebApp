@@ -35,19 +35,24 @@ function build_Schedule(){
 
     for(let i =0; i < hours_Day; i++) {
        
-        console.log(i)
-
+        // console.log(i)
+        // create div element
         var div = document.createElement("div");
+        // add place holder content of hour
         div.innerText = i;
+        //update ID to be the hour
         div.setAttribute("id","hour_"+i);
+        //update class to be an HOUR for CSS
         div.setAttribute("class","hour");
+        //update class to be a ROW for CSS
+        // div.setAttribute("class","row");
         
         schedule_Today.appendChild(div);
     };
-
 };
 
 build_Schedule();
+
     
 //-- SCHEDULER -> END
 /* -------------------------------------------------------------------------- */
@@ -128,7 +133,34 @@ function set_Database(entry) {
 
     // DATABASE VERIFICATION -> END // 
     //--------------------------------//
-    // DAILY BUILD - START //
+    //-- VALIDATE ENTRY -> START //
+
+    
+
+    //-- If Entry is undefined, move on. Otherwise evaluate
+    if(entry != undefined){
+        
+        //-- If daily edit is saved --//
+        if("daily" in entry){
+            console.log("Daily key exists in entry");
+            // TODO:: 12/01 #EP || Get Hour and Description IF EU pressed save, prepare to write
+            
+            // Get daily value and updated it
+            daily = description
+        }
+
+        //-- If setting edit is saved --//
+        if ("settings" in entry){
+            console.log("Settings key exist in entry");
+            // TODO- Determine if this is going to be editable
+            
+            // Get settings value and updated it
+            //settings[key_Setting] = value
+        } 
+    };    
+    //-- VALIDATE ENTRY -> END //
+    //--------------------------------//
+    // DAILY BUILD -> START //
     /* itterate and rebuild daily */ 
 
     // get ALL keys within daily

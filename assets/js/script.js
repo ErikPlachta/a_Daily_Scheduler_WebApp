@@ -11,8 +11,10 @@ const today = moment().format("dddd, MMMM Do YYYY");
 document.getElementById("currentDay").innerText = today;
 
 // hour in 24 hour format
-const now = moment().format("H");
+const now = moment().format("HH");
 
+const now_full = moment().format("HH:mm");
+document.getElementById("currentTime").innerText = now_full;
 
 //-- GLOBALS -> END
 /* -------------------------------------------------------------------------- */
@@ -40,8 +42,11 @@ function build_Schedule(){
     // end of business hours.   //
     let hours_End = database_Settings.defaults.dayEnd;
 
-    // Extract Times
-    database_Times = database.settings;
+    // All Time Values
+    let database_Times = database.settings.times;
+    // 12 or 24 hours?
+    let database_TimeFormat = database_Settings.defaults.timeFormat;
+    console.log(database_TimeFormat)
 
     //-- Building HTML --//
     
@@ -58,11 +63,11 @@ function build_Schedule(){
            // create div element
            var div = document.createElement("div");
            
-           // add place holder content of hour
            
+        //    console.log(database_Times[i][12])
            
            //update ID to be the hour
-           div.setAttribute("id","hour_"+i);
+           div.setAttribute("id","hour_"+database_Times[i][database_TimeFormat]);
            
            //update class to be an HOUR for CSS
            div.setAttribute("class","hour");
@@ -80,7 +85,7 @@ function build_Schedule(){
             else {
                 div.setAttribute("class","future row time-block");
             }
-            div.innerHTML = ("<span class='hour'>"+i +"</span>"); 
+            div.innerHTML = ("<span class='hour'>"+database_Times[i][database_TimeFormat]+"</span>"); 
             schedule_Today.appendChild(div);
         }
         
@@ -250,7 +255,7 @@ function testing_BuildDatabase() {
         },
         settings: {
            defaults: {
-               timeFormat: "12", // 12 or 24
+               timeFormat: 12, // 12 or 24
 
                // Business Hours - in military time for settings
                dayStart: 8, 
@@ -264,130 +269,155 @@ function testing_BuildDatabase() {
                dayEnd: null,
            },
             times : {
-                '00:00' : {
+                 0: {
                     state: 0, 
                     description: null,
-                    raw: 0
+                    12: '12:00 AM',
+                    24: '00:00 AM'
                 },
-                '01:00' : {
+                state: 0,
+                1: {
+                    description: null,
+                    12: '01:00 AM',
+                    24: '01:00 AM'
+                },
+                2 : {
                     state: 0,
                     description: null,
-                    raw: 1
+                    12: '02:00 AM',
+                    24: '02:00 AM'
                 },
-                '02:00' : {
+                3 : {
                     state: 0,
                     description: null,
-                    raw: 2
+                    12: '03:00 AM',
+                    24: '03:00 AM'
                 },
-                '03:00' : {
+                4: {
                     state: 0,
                     description: null,
-                    raw: 3
+                    12: '04:00 AM',
+                    24: '04:00 AM',
                 },
-                '04:00' : {
+                5: {
                     state: 0,
                     description: null,
-                    raw: 4
+                    12: '05:00 AM',
+                    24: '05:00 AM'
                 },
-                '05:00' : {
+                6: {
                     state: 0,
                     description: null,
-                    raw: 5
+                    12: '06:00 AM',
+                    24: '06:00 AM'
                 },
-                '06:00' : {
+                7: {
                     state: 0,
                     description: null,
-                    raw: 6
+                    12: '07:00 AM',
+                    24: '07:00 AM'
                 },
-                '07:00' : {
+                8: {
                     state: 0,
                     description: null,
-                    raw: 7
+                    12: '08:00 AM',
+                    24: '08:00 AM'
                 },
-                '08:00' : {
+                9 : {
                     state: 0,
                     description: null,
-                    raw: 8
+                    12: '09:00 AM',
+                    24: '09:00 AM'
                 },
-                '09:00' : {
+                10 : {
                     state: 0,
                     description: null,
-                    raw: 9
+                    12: '10:00 AM',
+                    24: '10:00 AM'
                 },
-                '10:00' : {
+                11 : {
                     state: 0,
                     description: null,
-                    raw: 10
+                   12: '11:00 AM',
+                   24: '11:00 AM'
                 },
-                '11:00' : {
+                12 : {
                     state: 0,
                     description: null,
-                    raw: 11
+                    12: '12:00 PM',
+                    24: '12:00 PM'
                 },
-                '12:00' : {
+                13 : {
                     state: 0,
                     description: null,
-                    raw: 12
+                    12: '01:00 PM',
+                    24: '13:00 PM'
                 },
-                '13:00' : {
+                14 : {
                     state: 0,
                     description: null,
-                    raw: 13
+                    12: '02:00 PM',
+                    24: '14:00 PM'
                 },
-                '14:00' : {
+                15 : {
                     state: 0,
                     description: null,
-                    raw: 14
+                    12: '03:00 PM',
+                    24: '15:00 PM'
                 },
-                '15:00' : {
+                16 : {
                     state: 0,
                     description: null,
-                    raw: 15
+                    12: '04:00 PM',
+                    24: '16:00 PM'
                 },
-                '16:00' : {
+                17 : {
                     state: 0,
                     description: null,
-                    raw: 16
+                    12: '05:00 PM',
+                    24: '17:00 PM'
                 },
-                '17:00' : {
+                18 : {
                     state: 0,
                     description: null,
-                    raw: 17
+                    12: '06:00 PM',
+                    24: '18:00 PM'
                 },
-                '18:00' : {
+                19 : {
                     state: 0,
                     description: null,
-                    raw: 18
+                    12: '07:00 PM',
+                    24: '19:00 PM'
                 },
-                '19:00' : {
+                20 : {
                     state: 0,
                     description: null,
-                    raw: 19
+                    12: '08:00 PM',
+                    24: '20:00 PM'
                 },
-                '20:00' : {
+                21 : {
                     state: 0,
                     description: null,
-                    raw: 20
+                    12: '09:00 PM',
+                    24: '20:00 PM'
                 },
-                '21:00' : {
+                22 : {
                     state: 0,
                     description: null,
-                    raw: 21
+                    12: '10:00 PM',
+                    24: '22:00 PM'
                 },
-                '22:00' : {
+                23 : {
                     state: 0,
                     description: null,
-                    raw: 22
+                    12: '11:00 PM',
+                    24: '23:00 PM'
                 },
-                '23:00' : {
+                24 : {
                     state: 0,
                     description: null,
-                    raw: 23
-                },
-                '24:00' : {
-                    state: 0,
-                    description: null,
-                    raw: 24
+                    12: '12:00 PM',
+                    24: '24:00 PM'
                 },
             }
         }

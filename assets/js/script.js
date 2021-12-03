@@ -20,10 +20,17 @@ function build_Schedule(){
 
     // in military time //
     let hours_Day = 24;
-    // start of business hours. 7am //
-    let hours_Start = 7;
-    // end of business hours. 6 pm  //
-    let hours_End = 18;
+
+    console.log("in build_Schedule()")
+    
+    // GET database
+    let database_Settings = JSON.parse(localStorage.getItem(database_Name));
+    // Extract settings
+    database_Settings = database_Settings.settings;
+    // start of business hours. //
+    let hours_Start = database_Settings.defaults.dayStart;
+    // end of business hours.   //
+    let hours_End = database_Settings.defaults.dayEnd;
 
     //-- Building HTML
     
@@ -35,23 +42,31 @@ function build_Schedule(){
 
     for(let i =0; i < hours_Day; i++) {
        
-        // console.log(i)
-        // create div element
-        var div = document.createElement("div");
-        // add place holder content of hour
-        div.innerText = i;
-        //update ID to be the hour
-        div.setAttribute("id","hour_"+i);
-        //update class to be an HOUR for CSS
-        div.setAttribute("class","hour");
-        //update class to be a ROW for CSS
-        // div.setAttribute("class","row");
+        if (i >= hours_Start && i <= hours_End){
         
-        schedule_Today.appendChild(div);
+           console.log(i)
+           
+           // create div element
+           var div = document.createElement("div");
+           
+           // add place holder content of hour
+           div.innerText = i;
+           
+           //update ID to be the hour
+           div.setAttribute("id","hour_"+i);
+           
+           //update class to be an HOUR for CSS
+           div.setAttribute("class","hour");
+           
+           //update class to be a ROW for CSS
+           div.setAttribute("class","row");
+           schedule_Today.appendChild(div);
+        }
+        
     };
 };
 
-build_Schedule();
+
 
     
 //-- SCHEDULER -> END
@@ -208,114 +223,138 @@ function testing_BuildDatabase() {
         '12/01/2021' : {
             '00:00' : {
                 state: 0, 
-                description: null
+                description: null,
+                raw: 0
             },
             '01:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 1
             },
             '02:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 2
             },
             '03:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 3
             },
             '04:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 4
             },
             '05:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 5
             },
             '06:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 6
             },
             '07:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 7
             },
             '08:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 8
             },
             '09:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 9
             },
             '10:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 10
             },
             '11:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 11
             },
             '12:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 12
             },
             '13:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 13
             },
             '14:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 14
             },
             '15:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 15
             },
             '16:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 16
             },
             '17:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 17
             },
             '18:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 18
             },
             '19:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 19
             },
             '20:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 20
             },
             '21:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 21
             },
             '22:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 22
             },
             '23:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 23
             },
             '24:00' : {
                 state: 0,
-                description: null
+                description: null,
+                raw: 24
             },
         }
         },
-
         settings: {
            defaults: {
                timeFormat: "12", // 12 or 24
 
                // Business Hours - in military time for settings
-               dayStart: "08:00", 
-               dayEnd: "18:00"
+               dayStart: 8, 
+               dayEnd: 18
            },
 
            // If user defines these settings, will over-ride defaults
@@ -330,5 +369,8 @@ function testing_BuildDatabase() {
     //TODO:: 12/01/2021 #EP || Add build database stuff here
 
     localStorage.setItem("a_DailyScheduler",JSON.stringify(a_DailyScheduler_demo));
+    
 };
-// testing_BuildDatabase();
+testing_BuildDatabase();
+
+build_Schedule();

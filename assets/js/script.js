@@ -31,15 +31,19 @@ function build_Schedule(){
     console.log("in build_Schedule()")
     
     // GET database
-    let database_Settings = JSON.parse(localStorage.getItem(database_Name));
+    let database = JSON.parse(localStorage.getItem(database_Name));
+    
     // Extract settings
-    database_Settings = database_Settings.settings;
+    database_Settings = database.settings;
     // start of business hours. //
     let hours_Start = database_Settings.defaults.dayStart;
     // end of business hours.   //
     let hours_End = database_Settings.defaults.dayEnd;
 
-    //-- Building HTML
+    // Extract Times
+    database_Times = database.settings;
+
+    //-- Building HTML --//
     
     // Grabbing div
     let schedule_Today = document.getElementById("schedule_Today");
@@ -55,7 +59,7 @@ function build_Schedule(){
            var div = document.createElement("div");
            
            // add place holder content of hour
-           div.innerText = i;
+           
            
            //update ID to be the hour
            div.setAttribute("id","hour_"+i);
@@ -68,15 +72,15 @@ function build_Schedule(){
            
            // if time in the past
            if (now > i){
-            div.setAttribute("class","past row hour");
+            div.setAttribute("class","past row time-block");
             } 
             else if (now == i) {
-                div.setAttribute("class","present row hour");
+                div.setAttribute("class","present row time-block");
             }
             else {
-                div.setAttribute("class","future row hour");
+                div.setAttribute("class","future row time-block");
             }
-            
+            div.innerHTML = ("<span class='hour'>"+i +"</span>"); 
             schedule_Today.appendChild(div);
         }
         
@@ -235,133 +239,14 @@ function testing_BuildDatabase() {
     
     let a_DailyScheduler_demo = {
         daily: {
-        '12/01/2021' : {
-            '00:00' : {
-                state: 0, 
-                description: null,
-                raw: 0
-            },
-            '01:00' : {
-                state: 0,
-                description: null,
-                raw: 1
-            },
-            '02:00' : {
-                state: 0,
-                description: null,
-                raw: 2
-            },
-            '03:00' : {
-                state: 0,
-                description: null,
-                raw: 3
-            },
-            '04:00' : {
-                state: 0,
-                description: null,
-                raw: 4
-            },
-            '05:00' : {
-                state: 0,
-                description: null,
-                raw: 5
-            },
-            '06:00' : {
-                state: 0,
-                description: null,
-                raw: 6
-            },
-            '07:00' : {
-                state: 0,
-                description: null,
-                raw: 7
-            },
-            '08:00' : {
-                state: 0,
-                description: null,
-                raw: 8
-            },
-            '09:00' : {
-                state: 0,
-                description: null,
-                raw: 9
-            },
-            '10:00' : {
-                state: 0,
-                description: null,
-                raw: 10
-            },
-            '11:00' : {
-                state: 0,
-                description: null,
-                raw: 11
-            },
-            '12:00' : {
-                state: 0,
-                description: null,
-                raw: 12
-            },
-            '13:00' : {
-                state: 0,
-                description: null,
-                raw: 13
-            },
-            '14:00' : {
-                state: 0,
-                description: null,
-                raw: 14
-            },
-            '15:00' : {
-                state: 0,
-                description: null,
-                raw: 15
-            },
-            '16:00' : {
-                state: 0,
-                description: null,
-                raw: 16
-            },
-            '17:00' : {
-                state: 0,
-                description: null,
-                raw: 17
-            },
-            '18:00' : {
-                state: 0,
-                description: null,
-                raw: 18
-            },
-            '19:00' : {
-                state: 0,
-                description: null,
-                raw: 19
-            },
-            '20:00' : {
-                state: 0,
-                description: null,
-                raw: 20
-            },
-            '21:00' : {
-                state: 0,
-                description: null,
-                raw: 21
-            },
-            '22:00' : {
-                state: 0,
-                description: null,
-                raw: 22
-            },
-            '23:00' : {
-                state: 0,
-                description: null,
-                raw: 23
-            },
-            '24:00' : {
-                state: 0,
-                description: null,
-                raw: 24
-            },
-        }
+            // example of base entry for future use
+            '12/03/2021' : {
+                '15:00' : {
+                    state: 1,
+                    description: "testing a description",
+                    raw: 15
+                },
+            }
         },
         settings: {
            defaults: {
@@ -377,7 +262,134 @@ function testing_BuildDatabase() {
                timeFormat: null,
                dayStart: null,
                dayEnd: null,
-           }
+           },
+            times : {
+                '00:00' : {
+                    state: 0, 
+                    description: null,
+                    raw: 0
+                },
+                '01:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 1
+                },
+                '02:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 2
+                },
+                '03:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 3
+                },
+                '04:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 4
+                },
+                '05:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 5
+                },
+                '06:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 6
+                },
+                '07:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 7
+                },
+                '08:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 8
+                },
+                '09:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 9
+                },
+                '10:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 10
+                },
+                '11:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 11
+                },
+                '12:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 12
+                },
+                '13:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 13
+                },
+                '14:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 14
+                },
+                '15:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 15
+                },
+                '16:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 16
+                },
+                '17:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 17
+                },
+                '18:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 18
+                },
+                '19:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 19
+                },
+                '20:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 20
+                },
+                '21:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 21
+                },
+                '22:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 22
+                },
+                '23:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 23
+                },
+                '24:00' : {
+                    state: 0,
+                    description: null,
+                    raw: 24
+                },
+            }
         }
     };
 

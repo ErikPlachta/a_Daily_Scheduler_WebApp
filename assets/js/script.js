@@ -5,6 +5,13 @@
 const schedule_Today = $("#schedule_Today");
 // For local storage DB
 const database_Name = "a_DailyScheduler";
+// Moment JS date
+const today = moment().format("dddd, MMMM Do YYYY");
+// Update to Today
+document.getElementById("currentDay").innerText = today;
+
+// hour in 24 hour format
+const now = moment().format("H");
 
 
 //-- GLOBALS -> END
@@ -43,8 +50,6 @@ function build_Schedule(){
     for(let i =0; i < hours_Day; i++) {
        
         if (i >= hours_Start && i <= hours_End){
-        
-           console.log(i)
            
            // create div element
            var div = document.createElement("div");
@@ -60,13 +65,23 @@ function build_Schedule(){
            
            //update class to be a ROW for CSS
            div.setAttribute("class","row");
-           schedule_Today.appendChild(div);
+           
+           // if time in the past
+           if (now > i){
+            div.setAttribute("class","past row hour");
+            } 
+            else if (now == i) {
+                div.setAttribute("class","present row hour");
+            }
+            else {
+                div.setAttribute("class","future row hour");
+            }
+            
+            schedule_Today.appendChild(div);
         }
         
     };
 };
-
-
 
     
 //-- SCHEDULER -> END

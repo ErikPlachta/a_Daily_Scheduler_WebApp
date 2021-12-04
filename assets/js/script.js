@@ -13,7 +13,7 @@ document.getElementById("currentDay").innerText = today;
 // hour in 24 hour format
 const now = moment().format("HH");
 
-const now_full = moment().format("HH:mm");
+const now_full = moment().format("hh:mm A");
 document.getElementById("currentTime").innerText = now_full;
 
 //-- GLOBALS -> END
@@ -258,8 +258,8 @@ function testing_BuildDatabase() {
                timeFormat: 12, // 12 or 24
 
                // Business Hours - in military time for settings
-               dayStart: 8, 
-               dayEnd: 18
+               dayStart: 6, 
+               dayEnd: 20
            },
 
            // If user defines these settings, will over-ride defaults
@@ -275,8 +275,8 @@ function testing_BuildDatabase() {
                     12: '12:00 AM',
                     24: '00:00 AM'
                 },
-                state: 0,
                 1: {
+                    state: 0,
                     description: null,
                     12: '01:00 AM',
                     24: '01:00 AM'

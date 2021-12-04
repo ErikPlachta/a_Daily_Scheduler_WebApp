@@ -24,7 +24,7 @@ document.getElementById("currentTime").innerText = now_full();
 // TODO:: 12/04/2021 #EP || Updates times accordingly
 
 
-
+// Even that happens when modal opens
 $('#add_TimeBlock_Event').on('shown.bs.modal', function (event) {
     
     // Update TIME
@@ -42,18 +42,18 @@ $('#add_TimeBlock_Event').on('shown.bs.modal', function (event) {
         console.log(typeof description_Holder)    
     }
     
-    
-    
-    // $( "#modal_EventDescription" ).text($(event.relatedTarget)[0]);
-    // make sure empty
-    // $("#modal_EventDescription").val('');
+    // FOCUS onto text-area for typing
     $("#modal_EventDescription").trigger('focus');
-    // console.log($(event.relatedTarget)[0].id);
-    // let timeblock_Selected = $(event.relatedTarget)[0].id;
-    
 });
 
+// $("#modal_EventDescription").change(function(){
+//     alert("The text has been changed.");
+//   });
 
+$("#modal_EventDescription").bind('input propertychange', function(){
+    // alert("The text has been changed.");
+    set_BTN_Defaults();
+});
 
 function set_BTN_Defaults(){
     
@@ -617,4 +617,3 @@ setInterval(function () {
     document.getElementById("currentTime").innerText = now_full();
 }, 100000);
 // }, 1800000); // 30 minutes
-  

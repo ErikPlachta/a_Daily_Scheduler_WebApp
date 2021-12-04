@@ -13,7 +13,7 @@ document.getElementById("currentDay").innerText = today;
 // hour in 24 hour format
 const now = moment().format("HH");
 
-const now_full = moment().format("hh:mm A");
+const now_full = moment().format("hh:mm:ss A");
 document.getElementById("currentTime").innerText = now_full;
 
 //-- GLOBALS -> END
@@ -181,20 +181,40 @@ function set_Database(entry) {
         
         //-- If daily edit is saved --//
         if("daily" in entry){
-            console.log("Daily key exists in entry");
+            console.log("Daily key exists in entry: ", daily);
             // TODO:: 12/01 #EP || Get Hour and Description IF EU pressed save, prepare to write
-            
             // Get daily value and updated it
-            daily = description
+            
+            // if (entry.daily == daily){
+            //     console.log("Yes");
+            // } else {
+            //     console.log('no');
+            // }
+
+            for (key in entry.daily){
+                // console.log(key);
+                if(daily[key] != undefined){
+                    console.log("here: ",key, daily[key]);
+                    daily[key].login_Last = now_full;
+                } else
+                {
+                    console.log("not here");
+                    //Not here yet, so adding to dict
+                    daily[key] = daily[key];
+                }
+            }
+            
+            
         }
 
         //-- If setting edit is saved --//
         if ("settings" in entry){
-            console.log("Settings key exist in entry");
+            console.log("Settings key exist in entry: ", settings);
             // TODO- Determine if this is going to be editable
             
             // Get settings value and updated it
-            //settings[key_Setting] = value
+            // settings += entry.settings;
+            
         } 
     };    
     //-- VALIDATE ENTRY -> END //
@@ -237,20 +257,19 @@ function set_Database(entry) {
 console.log("//-- script.js Running set_Database()...")
 set_Database();
 
-function testing_BuildDatabase() {
+function verify_build_Database() {
     
     // fully fleshed out all hours for just 1 day. 
         // TODO:: 12/01/2021 #EP || This best way to do it?
     
-    let a_DailyScheduler_demo = {
+    // console.log(moment().format("YYYY/MM/DD"));
+    
+    let a_DailyScheduler = {
         daily: {
-            // example of base entry for future use
-            '12/03/2021' : {
-                '15:00' : {
-                    state: 1,
-                    description: "testing a description",
-                    raw: 15
-                },
+            //build todays date into database
+            [(moment().format("YYYYMMDD"))]: {
+                login_First: now_full,
+                login_Last: now_full,
             }
         },
         settings: {
@@ -425,9 +444,11 @@ function testing_BuildDatabase() {
 
     //TODO:: 12/01/2021 #EP || Add build database stuff here
 
-    localStorage.setItem("a_DailyScheduler",JSON.stringify(a_DailyScheduler_demo));
+    // localStorage.setItem("a_DailyScheduler",JSON.stringify(a_DailyScheduler));
+    // Set Default Database 
+    set_Database(a_DailyScheduler);
     
 };
-testing_BuildDatabase();
+verify_build_Database();
 
 build_Schedule();

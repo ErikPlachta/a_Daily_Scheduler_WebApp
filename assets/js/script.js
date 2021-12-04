@@ -25,27 +25,59 @@ document.getElementById("currentTime").innerText = now_full();
 
 
 $('#add_TimeBlock_Event').on('shown.bs.modal', function (event) {
+    $( "#time_holder" ).text($(event.relatedTarget)[0].id);
     // make sure empty
     // $("#modal_EventDescription").val('');
     $('#modal_EventDescription').trigger('focus');
-    console.log($(event.relatedTarget)[0].id);
+    // console.log($(event.relatedTarget)[0].id);
     // let timeblock_Selected = $(event.relatedTarget)[0].id;
-    $( "#time_holder" ).val($(event.relatedTarget)[0].id);
+    
   });
 
 // when  save button in modal was clicked
-$(".btn-save").click(function() {
+$(".btn-save").click(function () {
     
     // get form values
     var description = $("#modal_EventDescription").val();
     
-    if (description_ != '') {
+    // console.log($(this));
+    
+    
+
+    if (description != '') {
+        // console.log(description)
+        // console.log("description_"+time_holder.innerText.split(" ")[0]);
+        // console.log(time_holder.innerText.split(" ")[0])
+
+        // console.log(("#"+"description_"+(time_holder.innerText.split(" ")[0])));
+        // let doc = document.getElementById(("#"+"description_"+(time_holder.innerText.split(" ")[0])));
+        
+        let msg = "trying inner text manual set";
+        // console.log(msg)
+
+        let id = "description_"+ (time_holder.innerText.split(" ")[0])
+        // console.log(id);
+        document.getElementById(id).innerText = description;
+        
+        // document.getElementById('"#'+id+'"').innerText = today();
+        // $( "#time_holder" ).text($(event.relatedTarget)[0]
+        // $(id).text("test");
+        // $(event.relatedTarget)[0].text() = "test";
+
+        // $( "#"+"description_"+(time_holder.innerText.split(" ")[0]) ).text($(event.relatedTarget)[0].id);
+        // console.log(doc);
+        
+        // console.log($( "#description_08:00" ));
+
+
+        //re-hide the modal
         $("#add_TimeBlock_Event").modal("hide");
-        console.log(description_)
+        
+        // empty description on save
         $("#modal_EventDescription").val('');
     }
     else {
-        console.log(description_)
+        console.log(description)
     }    
   });
   
@@ -123,8 +155,8 @@ function build_Schedule(){
             div.innerHTML = (
                 "<span class='hour'>"+database_Times[i][database_TimeFormat]+
                 "</span>"+
-                "<span class='description' id=description_'"+database_Times[i][database_TimeFormat]+
-                "'>Description Holder</span>"
+                "<span class='description' id=description_"+database_Times[i][database_TimeFormat]+
+                "'></span>"
                 // +
                 // '<br><button type="button" class="btn btn-primary" data-toggle="modal"'+
                 // 'data-target="#add_TimeBlock_Event">Add Event</button></span>"'

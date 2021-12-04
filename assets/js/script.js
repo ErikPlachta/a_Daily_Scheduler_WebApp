@@ -27,14 +27,13 @@ document.getElementById("currentTime").innerText = now_full;
 function build_Schedule(){
     /* Builds the calendar */
     
-    console.log("function build_Schedule()");
+    console.log("//-- function build_Schedule()");
     
     //-- Defining Local Variables
 
     // in military time //
     let hours_Day = 24;
 
-    console.log("in build_Schedule()")
     
     // GET database
     let database = JSON.parse(localStorage.getItem(database_Name));
@@ -50,7 +49,7 @@ function build_Schedule(){
     let database_Times = database.settings.times;
     // 12 or 24 hours?
     let database_TimeFormat = database_Settings.defaults.timeFormat;
-    console.log(database_TimeFormat)
+    // console.log("database_TimeFormat: ",database_TimeFormat)
 
     
     //-- Building HTML --//
@@ -108,7 +107,7 @@ function get_Database(){
 
     // Get Database
     let database_Current = JSON.parse(localStorage.getItem(database_Name));
-    console.log(database_Current);
+    console.log("database_Current: ",database_Current);
     // If database exists
     if (database_Current != null) {
         
@@ -157,6 +156,8 @@ function set_Database(entry) {
         if (database_Current.daily != null) {
             daily = database_Current.daily;
         }
+        else {
+        }
         
         // LEADERBOARD VERIFY -> END  //
         //--------------------------------//
@@ -180,8 +181,8 @@ function set_Database(entry) {
     //-- VALIDATE ENTRY -> START //
 
     
-
-    //-- If Entry is undefined, move on. Otherwise evaluate
+    //-- TODO:: 12/04/2021 #EP || be able to take entry. Make sure it's accurate
+    //-- If Entry is provided, merge data. On load ALWAYS provides default dict
     if(entry != undefined){
         
         //-- If daily edit is saved --//
@@ -196,30 +197,35 @@ function set_Database(entry) {
             //     console.log('no');
             // }
 
+            // Build daily results
             for (key in entry.daily){
-                // console.log(key);
+                console.log("entry.daily[key]: ", key)
+                
+                
+                // If the current DAY is in the database already
                 if(daily[key] != undefined){
-                    console.log("here: ",key, daily[key]);
+                    
+                    // set Last Login time to now
                     daily[key].login_Last = now_full;
-                } else
-                {
-                    console.log("not here");
-                    //Not here yet, so adding to dict
-                    daily[key] = daily[key];
+                    
                 }
-            }
-            
-            
-        }
+                // IF Today isn't in there, build it
+                else
+                {
+                    console.log("Key",key, " not in database so adding.")
+                    //No there yet so adding it
+                    daily[key] = entry.daily[key];
+                }
+            };
+            daily = Object.assign({},daily, entry.daily);
+        };
 
         //-- If setting edit is saved --//
         if ("settings" in entry){
             console.log("Settings key exist in entry: ", settings);
-            // TODO- Determine if this is going to be editable
             
-            // Get settings value and updated it
-            // settings += entry.settings;
-            
+            // Merge settings together from curent and entry
+            settings = Object.assign({},settings, entry.settings);            
         } 
     };    
     //-- VALIDATE ENTRY -> END //
@@ -259,9 +265,10 @@ function set_Database(entry) {
 /* DATABASE MANGEMENT -> END */
 /* -------------------------------------------------------------------------- */
 /* RUNNING */
-console.log("//-- script.js Running set_Database()...")
-set_Database();
 
+console.log("//-- script.js Running set_Database()...")
+
+// MAKE SURE DATABASE EXISTS
 function verify_build_Database() {
     
     // fully fleshed out all hours for just 1 day. 
@@ -447,6 +454,7 @@ function verify_build_Database() {
         }
     };
 
+    console.log("aDailyScheduler: ",a_DailyScheduler)
     //TODO:: 12/01/2021 #EP || Add build database stuff here
 
     // localStorage.setItem("a_DailyScheduler",JSON.stringify(a_DailyScheduler));

@@ -79,19 +79,22 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="add_TimeBlock_Event_Title">Schedule an Event for <span id='time_holder'>00:00</span></h5>
+            <h3 class="modal-title" id="add_TimeBlock_Event_Title"><span id='event_ScheduleUpdate'>Schedule an</span> event for <span id='time_holder'>00:00</span>?</h3>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <label for="modal_EventDescription">Enter Description</label>
-              <textarea class="form-control" id="modal_EventDescription" rows="3"></textarea>
+            <label for="modal_EventDescription"><h5>Description</h5></label>
+              <textarea class="form-control" id="modal_EventDescription" rows="3" placeholder='This event is for...'></textarea>
           </div>
-          
+          <div class='text-center'>
+            <p id='event_Message'>
+            </p>
+          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary btn-save">Save changes</button>
+            <button type="button" class="btn btn-primary btn-save">Save</button>
           </div>
         </div>
       </div>
@@ -114,18 +117,3 @@
     <script src="./assets/js/script.js"></script>
   </body>
 </html>
-
-
-<!--
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery-ui-touch-punch@0.2.3/jquery.ui.touch-punch.min.js"></script>
-  <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
--->

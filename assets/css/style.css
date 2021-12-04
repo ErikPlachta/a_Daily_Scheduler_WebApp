@@ -59,6 +59,7 @@ textarea{
   height: 80px;
   border-top: 1px solid white;
   cursor: pointer;
+  color: black;
 }
 
 /* Styling for the hour text itself */
@@ -93,6 +94,9 @@ textarea{
   transition: all .3s ease-in-out;
 }
 
+#event_Message {
+  padding: .5rem;
+}
 
 /* -------------------------------------------------------------------------- */
 /*-- TIMEBASED -> START --*/

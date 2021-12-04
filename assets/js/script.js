@@ -24,64 +24,124 @@ document.getElementById("currentTime").innerText = now_full();
 // TODO:: 12/04/2021 #EP || Updates times accordingly
 
 
+
 $('#add_TimeBlock_Event').on('shown.bs.modal', function (event) {
+    
+    // Update TIME
     $( "#time_holder" ).text($(event.relatedTarget)[0].id);
+    
+
+    let description_Holder = document.getElementById("description_"+ (time_holder.innerText.split(" ")[0])).innerText;
+    console.log(description_Holder);
+    if ( description_Holder != "") {
+        // $( "#modal_EventDescription").text(document.getElementById("description_"+ (time_holder.innerText.split(" ")[0])).innerText);
+        $( "#modal_EventDescription").text("test");
+    } 
+    else
+    {
+        console.log(typeof description_Holder)    
+    }
+    
+    
+    
+    // $( "#modal_EventDescription" ).text($(event.relatedTarget)[0]);
     // make sure empty
     // $("#modal_EventDescription").val('');
-    $('#modal_EventDescription').trigger('focus');
+    $("#modal_EventDescription").trigger('focus');
     // console.log($(event.relatedTarget)[0].id);
     // let timeblock_Selected = $(event.relatedTarget)[0].id;
     
-  });
+});
 
-// when  save button in modal was clicked
-$(".btn-save").click(function () {
+
+
+function set_BTN_Defaults(){
     
-    // get form values
-    var description = $("#modal_EventDescription").val();
+    // TODO:: 12/04/2021 #EP ||  be 100% sure I know what this is doing
+    setTimeout( function() {
+
+        $(".btn-cancel").replaceWith('<button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>');
+        $(".btn-delete").replaceWith('<button type="button" class="btn btn-primary btn-save">Save</button>');
+        $( "#event_Message").html('<span class="alert alert-primary" role="alert"><i>Add Description & press <em class="badge badge-primary">Save</em> to create an event.</i></span>');
+        
+        // Event Listner when clicked Save
+        $(".btn-save").click(function () {
+            
+            console.log(".btn-save") // TODO:: Delete when done testing
+
+            // get description values user has typed in
+            var description_Holder = $("#modal_EventDescription").val();
+            
+            
+            // If Description was filled out our had a value already ( because event existed )
+            if (description_Holder != '') {
+                
+                // let database = {
+                //     daily : {
+                //         [schedule_Today]: {
+                //             description: description_Holder 
+                //         }
+                //     }
+                // };
+                // console.log(database)
+
+                // Update scheduler
+                document.getElementById("description_"+ (time_holder.innerText.split(" ")[0])).innerText = description_Holder;
+                //TODO:: Update Database
+                //set_Database();
+
+                //re-hide the modal
+                $("#add_TimeBlock_Event").modal("hide");
+                
+                // empty description on save for new edits
+                $("#modal_EventDescription").val('');
+            }
+            
+            // If NO description and pressed Save, prompt delete
+                // TODO:: 12/04/2021 #EP || If had a description on entry
+            else if (description_Holder == '' && $(".btn-save")) {
+                set_BTN_Cancel();
+                set_BTN_Delete();
+            }
+        });
+        console.log("updated btns to default")
+    }, 500);    
     
-    // console.log($(this));
+}
+
+function set_BTN_Close(){
+        $(".btn-close").click(function () {
+        console.log(".btn-close");
+        // $(".btn-cancel").replaceWith('<button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>')
+        // $(".btn-save").replaceWith('<button type="button" class="btn btn-primary btn-save">Save</button>')
+    });
+
+}
+
+function set_BTN_Cancel(){
+    $(".btn-close").replaceWith('<button type="button" class="btn btn-secondary btn-cancel" data-dismiss="modal">Cancel</button>')
+    $(".btn-cancel").click(function () {
+        console.log(".btn-cancel");
+        set_BTN_Defaults();    
+    });
+    
+
+}
+
+function set_BTN_Delete(){
+    //Replace Save and Close then create event listeners
+
+    // ALERT Warning
+    $( "#event_Message").html('<span class="alert alert-danger" role="alert"><i>Press <em class="badge badge-danger">Delete</em> to remove event.</i></span>');
+    
+    $(".btn-save").replaceWith('<button type="button" class="btn btn-danger btn-delete" data-dismiss="modal">Delete</button>')
     
     
-
-    if (description != '') {
-        // console.log(description)
-        // console.log("description_"+time_holder.innerText.split(" ")[0]);
-        // console.log(time_holder.innerText.split(" ")[0])
-
-        // console.log(("#"+"description_"+(time_holder.innerText.split(" ")[0])));
-        // let doc = document.getElementById(("#"+"description_"+(time_holder.innerText.split(" ")[0])));
-        
-        let msg = "trying inner text manual set";
-        // console.log(msg)
-
-        let id = "description_"+ (time_holder.innerText.split(" ")[0])
-        // console.log(id);
-        document.getElementById(id).innerText = description;
-        
-        // document.getElementById('"#'+id+'"').innerText = today();
-        // $( "#time_holder" ).text($(event.relatedTarget)[0]
-        // $(id).text("test");
-        // $(event.relatedTarget)[0].text() = "test";
-
-        // $( "#"+"description_"+(time_holder.innerText.split(" ")[0]) ).text($(event.relatedTarget)[0].id);
-        // console.log(doc);
-        
-        // console.log($( "#description_08:00" ));
-
-
-        //re-hide the modal
-        $("#add_TimeBlock_Event").modal("hide");
-        
-        // empty description on save
-        $("#modal_EventDescription").val('');
-    }
-    else {
-        console.log(description)
-    }    
-  });
-  
-
+    $(".btn-delete").click(function () {
+        console.log(".btn-delete");
+        set_BTN_Defaults();    
+    });
+}
 
 //-- MODAL -> END
 /* -------------------------------------------------------------------------- */
@@ -542,6 +602,7 @@ verify_build_Database();
 
 build_Schedule();
 
+set_BTN_Defaults();
 /* RUNNING -> END */
 /* -------------------------------------------------------------------------- */
 /* RE_RUN EVERY 1 Minute */

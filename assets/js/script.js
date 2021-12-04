@@ -16,11 +16,42 @@ const now = function() { return moment().format("HH")};
 const now_full = function() {return moment().format("hh:mm:ss A")};
 document.getElementById("currentTime").innerText = now_full();
 
+//-- GLOBALS -> END
+/* -------------------------------------------------------------------------- */
+//-- MODAL -> START
+
 //Toggle Time Button
 // TODO:: 12/04/2021 #EP || Updates times accordingly
 
 
-//-- GLOBALS -> END
+$('#add_TimeBlock_Event').on('shown.bs.modal', function (event) {
+    // make sure empty
+    // $("#modal_EventDescription").val('');
+    $('#modal_EventDescription').trigger('focus');
+    console.log($(event.relatedTarget)[0].id);
+    // let timeblock_Selected = $(event.relatedTarget)[0].id;
+    $( "#time_holder" ).val($(event.relatedTarget)[0].id);
+  });
+
+// when  save button in modal was clicked
+$(".btn-save").click(function() {
+    
+    // get form values
+    var description = $("#modal_EventDescription").val();
+    
+    if (description_ != '') {
+        $("#add_TimeBlock_Event").modal("hide");
+        console.log(description_)
+        $("#modal_EventDescription").val('');
+    }
+    else {
+        console.log(description_)
+    }    
+  });
+  
+
+
+//-- MODAL -> END
 /* -------------------------------------------------------------------------- */
 //-- SCHEDULER -> START
 
@@ -71,10 +102,13 @@ function build_Schedule(){
         //    console.log(database_Times[i][12])
            
            //update ID to be the hour
-           div.setAttribute("id","hour_"+database_Times[i][database_TimeFormat]);
+           div.setAttribute("id",database_Times[i][database_TimeFormat]);
                    
            //update class to be a ROW for CSS
            div.setAttribute("class","row");
+           
+           div.setAttribute("data-toggle","modal")
+           div.setAttribute('data-target','#add_TimeBlock_Event');
            
            // if time in the past
            if (now() > i){
@@ -88,16 +122,18 @@ function build_Schedule(){
             }
             div.innerHTML = (
                 "<span class='hour'>"+database_Times[i][database_TimeFormat]+
-                '<button id="create-event" class="btn btn-block btn-add" data-toggle="modal"'+
-                'data-target="#task-form-modal">'+
-                '<span class="oi oi-plus mr-2"></span>Add event</button>'+
-                "</span>" 
+                "</span>"+
+                "<span class='description' id=description_'"+database_Times[i][database_TimeFormat]+
+                "'>Description Holder</span>"
+                // +
+                // '<br><button type="button" class="btn btn-primary" data-toggle="modal"'+
+                // 'data-target="#add_TimeBlock_Event">Add Event</button></span>"'
             ); 
             schedule_Today.appendChild(div);
-        }
-        
+        }        
     };
 };
+  
 
 //-- SCHEDULER -> END
 /* -------------------------------------------------------------------------- */
@@ -486,18 +522,6 @@ setInterval(function () {
     });
     document.getElementById("currentDay").innerText = today();
     document.getElementById("currentTime").innerText = now_full();
-}, 10000);
+}, 100000);
 // }, 1800000); // 30 minutes
   
-
-// modal was triggered
-$("#task-form-modal").on("show.bs.modal", function() {
-  // clear values
-  $("#modalTaskDescription, #modalDueDate").val("");
-});
-
-// modal is fully visible
-$("#task-form-modal").on("shown.bs.modal", function() {
-  // highlight textarea
-  $("#modalTaskDescription").trigger("focus");
-});

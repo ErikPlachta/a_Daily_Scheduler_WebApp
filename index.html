@@ -30,27 +30,48 @@
     <title>A Daily Scheduler</title>
   </head>
 
-  <body>
+    <body>
     <header class="jumbotron">
-      <h1 class="display-3">
-        <span class="far fa-calendar-check"></span> 
-        A Daily Scheduler
-      </h1>
-      <p class="lead">A simple calendar app for scheduling your work day</p>
-      <p class="lead">Date: <span id="currentDay"></span></p>
-      <p class="lead">Refresh Time: <span id="currentTime"></span></p>
       
-      <!-- TODO:: 12/03/2021 #EP || Add this to toggle
-      <span>
-        
-        <button id='1224_Toggle'>id='1224_Toggle'</button>
-      </span> -->
+      
+      
+      <blckquote class="blockquote p-3 mb-2">
+        <h1 class="display-3">
+          <span class="far fa-calendar-check"></span> A Daily Scheduler
+        </h1>
+        <footer class="blockquote-footer">A basic calendar app using browser local storage</footer>
+      </blckquote>
+      
+      <!-- ---------------------------------------------------------------- --->
+      <!-- TOGGLE 12-24 -> END -->
+
+      <section class="timeFormat p-3 mb-2">
+          <span class="">Select Time Format</span>
+          <section class="">
+            <span class="custom-control custom-radio custom-control-inline p-2">
+              <input type="radio" id="radio_12" name="timeFormat" class="custom-control-input" checked>
+              <label class="custom-control-label badge-pill badge-primary" for="radio_12">12</label>
+            </span>
+            <span class="custom-control custom-radio custom-control-inline p-2">
+              <input type="radio" id="radio_24" name="timeFormat" class="custom-control-input">
+              <label class="custom-control-label badge-pill badge-secondary " for="radio_24">24</label>
+            </span>
+          </section>
+        </section>
+      
+        <!-- TOGGLE 12-24 -> END -->
+      <!-- ---------------------------------------------------------------- --->
+      <!-- DATE-TIME CONTAINER -> START -->
+      
+      <section class="container_DateTime p-3 mb-2">
+        <p class="lead" id="todayDate">Today is <span id="currentDay"></span></p>
+        <p class="lead" id="pageRefreshed">Page Last Refreshed at <span id="currentTime"></span></p>
+      </section>
+      <!-- DATE-TIME CONTAINER -> END -->
     </header>
+    
     <!-- TIMES -->
-    <div class="container" id="schedule_Today">
-      <!-- TODO:: 12/01 #EP || Remove this Placeholder -->
-      <span class='row'>anc</span>
-    </div>
+    <div class="container" id="schedule_Today"></div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>

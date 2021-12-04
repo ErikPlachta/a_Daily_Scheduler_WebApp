@@ -26,6 +26,32 @@ textarea{
   color: black;
   border-radius: 0;
   border-bottom: 10px solid black;
+  /* margin: 2rem; */
+  padding: 2rem; 
+  
+}
+/* Header holding date time stamp + toggle button */
+.container_DateTime {
+  box-shadow: inset 0rem 0rem .25rem rgba(0,0,0,.5);
+}
+
+.timeFormat{
+  /* margin: ; */
+  /* align-items: center; */
+  /* align-content: center; */
+  /* justify-content: center; */
+  /* border-left: 1px solid black; */
+  
+}
+
+.timeFormat h3 {
+  /* padding-left: 1rem;
+  width: 100%; */
+}
+
+
+.timeFormat span label {
+  padding: .5rem 1rem;
 }
 
 /*-- HEADER -> END  --*/

@@ -16,6 +16,11 @@ const now = moment().format("HH");
 const now_full = moment().format("hh:mm:ss A");
 document.getElementById("currentTime").innerText = now_full;
 
+//Toggle Time Button
+// TODO:: 12/04/2021 #EP || Updates times accordingly
+
+
+
 //-- GLOBALS -> END
 /* -------------------------------------------------------------------------- */
 //-- SCHEDULER -> START
@@ -48,6 +53,7 @@ function build_Schedule(){
     let database_TimeFormat = database_Settings.defaults.timeFormat;
     console.log(database_TimeFormat)
 
+    
     //-- Building HTML --//
     
     // Grabbing div

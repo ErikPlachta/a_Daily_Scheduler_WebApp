@@ -43,13 +43,7 @@ textarea{
   /* border-left: 1px solid black; */
   
 }
-
-.timeFormat h3 {
-  /* padding-left: 1rem;
-  width: 100%; */
-}
-
-
+/* Pill around Time-Selection */
 .timeFormat span label {
   padding: .5rem 1rem;
 }
@@ -120,3 +114,4 @@ textarea{
 
 /*-- EVENT -> END --*/
 /* -------------------------------------------------------------------------- */
+

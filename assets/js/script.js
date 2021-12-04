@@ -20,7 +20,6 @@ document.getElementById("currentTime").innerText = now_full;
 // TODO:: 12/04/2021 #EP || Updates times accordingly
 
 
-
 //-- GLOBALS -> END
 /* -------------------------------------------------------------------------- */
 //-- SCHEDULER -> START
@@ -283,8 +282,8 @@ function verify_build_Database() {
                timeFormat: 12, // 12 or 24
 
                // Business Hours - in military time for settings
-               dayStart: 6, 
-               dayEnd: 20
+               dayStart: 8, 
+               dayEnd: 18
            },
 
            // If user defines these settings, will over-ride defaults

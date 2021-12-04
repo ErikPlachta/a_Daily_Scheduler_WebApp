@@ -6,15 +6,15 @@ const schedule_Today = $("#schedule_Today");
 // For local storage DB
 const database_Name = "a_DailyScheduler";
 // Moment JS date
-const today = moment().format("dddd, MMMM Do YYYY");
+const today = function() {return moment().format("dddd, MMMM Do YYYY")};
 // Update to Today
-document.getElementById("currentDay").innerText = today;
+document.getElementById("currentDay").innerText = today();
 
 // hour in 24 hour format
-const now = moment().format("HH");
+const now = function() { return moment().format("HH")};
 
-const now_full = moment().format("hh:mm:ss A");
-document.getElementById("currentTime").innerText = now_full;
+const now_full = function() {return moment().format("hh:mm:ss A")};
+document.getElementById("currentTime").innerText = now_full();
 
 //Toggle Time Button
 // TODO:: 12/04/2021 #EP || Updates times accordingly
@@ -72,33 +72,40 @@ function build_Schedule(){
            
            //update ID to be the hour
            div.setAttribute("id","hour_"+database_Times[i][database_TimeFormat]);
-           
-           //update class to be an HOUR for CSS
-           div.setAttribute("class","hour");
-           
+                   
            //update class to be a ROW for CSS
            div.setAttribute("class","row");
            
            // if time in the past
-           if (now > i){
+           if (now() > i){
             div.setAttribute("class","past row time-block");
             } 
-            else if (now == i) {
+            else if (now() == i) {
                 div.setAttribute("class","present row time-block");
             }
             else {
                 div.setAttribute("class","future row time-block");
             }
-            div.innerHTML = ("<span class='hour'>"+database_Times[i][database_TimeFormat]+"</span>"); 
+            div.innerHTML = (
+                "<span class='hour'>"+database_Times[i][database_TimeFormat]+
+                '<button id="create-event" class="btn btn-block btn-add" data-toggle="modal"'+
+                'data-target="#task-form-modal">'+
+                '<span class="oi oi-plus mr-2"></span>Add event</button>'+
+                "</span>" 
+            ); 
             schedule_Today.appendChild(div);
         }
         
     };
 };
 
-    
 //-- SCHEDULER -> END
 /* -------------------------------------------------------------------------- */
+//-- ADD EVENT -> START
+
+
+    
+//-- ADD EVENT -> START
 /* -------------------------------------------------------------------------- */
 /* DATABASE MANGEMENT -> START */
 
@@ -206,7 +213,7 @@ function set_Database(entry) {
                 if(daily[key] != undefined){
                     
                     // set Last Login time to now
-                    daily[key].login_Last = now_full;
+                    daily[key].login_Last = now_full();
                     
                 }
                 // IF Today isn't in there, build it
@@ -217,6 +224,7 @@ function set_Database(entry) {
                     daily[key] = entry.daily[key];
                 }
             };
+            // Merge daily logs together from curent and entry
             daily = Object.assign({},daily, entry.daily);
         };
 
@@ -280,8 +288,8 @@ function verify_build_Database() {
         daily: {
             //build todays date into database
             [(moment().format("YYYYMMDD"))]: {
-                login_First: now_full,
-                login_Last: now_full,
+                login_First: now_full(),
+                login_Last: now_full(),
             }
         },
         settings: {
@@ -465,3 +473,31 @@ function verify_build_Database() {
 verify_build_Database();
 
 build_Schedule();
+
+/* RUNNING -> END */
+/* -------------------------------------------------------------------------- */
+/* RE_RUN EVERY 1 Minute */
+
+// Event that re-runs every X miliseconds to keep up to date
+setInterval(function () {
+    $(".row").each(function(index, el) {
+    //   auditTask(el);
+    console.log(el)
+    });
+    document.getElementById("currentDay").innerText = today();
+    document.getElementById("currentTime").innerText = now_full();
+}, 10000);
+// }, 1800000); // 30 minutes
+  
+
+// modal was triggered
+$("#task-form-modal").on("show.bs.modal", function() {
+  // clear values
+  $("#modalTaskDescription, #modalDueDate").val("");
+});
+
+// modal is fully visible
+$("#task-form-modal").on("shown.bs.modal", function() {
+  // highlight textarea
+  $("#modalTaskDescription").trigger("focus");
+});

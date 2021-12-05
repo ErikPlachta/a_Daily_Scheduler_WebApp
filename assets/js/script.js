@@ -72,15 +72,16 @@ function set_BTN_Defaults(){
         // If Description was filled out our had a value already ( because event existed )
         if (description_Holder != '') {
             
-            // let database = {
-            //     daily : {
-            //         [schedule_Today]: {
-            //             description: description_Holder 
-            //         }
-            //     }
-            // };
-            // console.log(database)
-
+            let database = {
+                daily : {
+                    [(moment().format("HH"))]: {
+                        description: description_Holder,
+                        state: 1
+                    }
+                }
+            };
+            console.log(database);
+            set_Database(database);
             // Update scheduler
             document.getElementById("description_"+ (time_holder.innerText.split(" ")[0])).innerText = description_Holder;
             //TODO:: Update Database
@@ -354,7 +355,7 @@ function set_Database(entry) {
                 // IF Today isn't in there, build it
                 else
                 {
-                    console.log("Key",key, " not in database so adding.")
+                    console.log("Key",key, "has been added to database.")
                     //No there yet so adding it
                     daily[key] = entry.daily[key];
                 }

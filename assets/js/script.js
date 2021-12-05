@@ -20,30 +20,24 @@ document.getElementById("currentTime").innerText = now_full();
 /* -------------------------------------------------------------------------- */
 //-- MODAL -> START
 
-//Toggle Time Button
-// TODO:: 12/04/2021 #EP || Updates times accordingly
-
-
-// Even that happens when modal opens
+// Event when Event modal opened
 $('#add_TimeBlock_Event').on('shown.bs.modal', function (event) {
     
     // Update TIME
     $( "#time_holder" ).text($(event.relatedTarget)[0].id);
     
-
-    let description_Holder = document.getElementById("description_"+ (time_holder.innerText.split(" ")[0])).innerText;
-    console.log(description_Holder);
-    if ( description_Holder.trim() != "") {
-        // $( "#modal_EventDescription").text(document.getElementById("description_"+ (time_holder.innerText.split(" ")[0])).innerText);
-        $( "#modal_EventDescription").text("test");
-    } 
-    else
-    {
-        console.log("else:",typeof description_Holder) 
+    // $( "#modal_EventDescription" ).text($(event.relatedTarget)[0].innerText);
+    let variable = document.getElementById("description_"+ (time_holder.innerText.split(" ")[0])).innerText;
+    // console.log(document.getElementById("description_"+ (time_holder.innerText.split(" ")[0])));
+    // $( "#modal_EventDescription" ).html({variable});
+    if (variable != ""){
+        $( "#event_Message").html('<span class="alert alert-info" role="alert"><i>Updated event and press <em class="badge badge-primary">Save</em> to change event.</i></span>');
+        $("#modal_EventDescription").replaceWith('<textarea class="form-control" id="modal_EventDescription" rows="3" spellcheck="true" placeholder="This event is for...">'+variable+'</textarea>');
     }
     
-    // FOCUS onto text-area for typing
     $("#modal_EventDescription").trigger('focus');
+
+
 });
 
 
@@ -60,54 +54,52 @@ $("#modal_EventDescription").bind('input propertychange', function(){
 function set_BTN_Defaults(){
     
     // TODO:: 12/04/2021 #EP ||  be 100% sure I know what this is doing
-    // setTimeout( function() {
+    
 
-        $(".btn-cancel").replaceWith('<button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>');
-        $(".btn-delete").replaceWith('<button type="button" class="btn btn-primary btn-save">Save</button>');
-        $( "#event_Message").html('<span class="alert alert-primary" role="alert"><i>Add Description & press <em class="badge badge-primary">Save</em> to create an event.</i></span>');
+    $(".btn-cancel").replaceWith('<button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>');
+    $(".btn-delete").replaceWith('<button type="button" class="btn btn-primary btn-save">Save</button>');
+    $( "#event_Message").html('<span class="alert alert-primary" role="alert"><i>Add Description & press <em class="badge badge-primary">Save</em> to create an event.</i></span>');
+    
+    // Event Listner when clicked Save
+    $(".btn-save").click(function () {
         
-        // Event Listner when clicked Save
-        $(".btn-save").click(function () {
-            
-            console.log(".btn-save") // TODO:: Delete when done testing
+        console.log(".btn-save") // TODO:: Delete when done testing
 
-            // get description values user has typed in
-            var description_Holder = $("#modal_EventDescription").val();
+        // get description values user has typed in
+        var description_Holder = $("#modal_EventDescription").val();
+        
+        
+        // If Description was filled out our had a value already ( because event existed )
+        if (description_Holder != '') {
             
+            // let database = {
+            //     daily : {
+            //         [schedule_Today]: {
+            //             description: description_Holder 
+            //         }
+            //     }
+            // };
+            // console.log(database)
+
+            // Update scheduler
+            document.getElementById("description_"+ (time_holder.innerText.split(" ")[0])).innerText = description_Holder;
+            //TODO:: Update Database
+            //set_Database();
+
+            //re-hide the modal
+            $("#add_TimeBlock_Event").modal("hide");
             
-            // If Description was filled out our had a value already ( because event existed )
-            if (description_Holder != '') {
-                
-                // let database = {
-                //     daily : {
-                //         [schedule_Today]: {
-                //             description: description_Holder 
-                //         }
-                //     }
-                // };
-                // console.log(database)
-
-                // Update scheduler
-                document.getElementById("description_"+ (time_holder.innerText.split(" ")[0])).innerText = description_Holder;
-                //TODO:: Update Database
-                //set_Database();
-
-                //re-hide the modal
-                $("#add_TimeBlock_Event").modal("hide");
-                
-                // empty description on save for new edits
-                $("#modal_EventDescription").val('');
-            }
-            // If NO description and pressed Save, prompt delete
-                // TODO:: 12/04/2021 #EP || If had a description on entry
-            else if (description_Holder.trim() == "" && $(".btn-save")) {
-                console.log("description_Holder:",description_Holder, "and .btn-save pressed.");
-                set_BTN_Cancel();
-                set_BTN_Delete();
-            }
-        });
-        console.log("updated btns to default")
-    // }, 1000);    
+            // empty description on save for new edits
+            $("#modal_EventDescription").val('');
+        }
+        // If NO description and pressed Save, prompt delete
+        else if (description_Holder.trim() == "" && $(".btn-save")) {
+            console.log("description_Holder:",description_Holder, "and .btn-save pressed.");
+            set_BTN_Cancel();
+            set_BTN_Delete();
+        }
+    });
+    console.log("updated btns to default"); // TODO:: 12/04/2021 #EP || Delete once done testing
     
 }
 
@@ -142,8 +134,10 @@ function set_BTN_Delete(){
     // Add event listener
     $(".btn-delete").click(function () {
         console.log(".btn-delete");
-        // hide window
         
+        //delete event content
+        document.getElementById("description_"+ (time_holder.innerText.split(" ")[0])).innerText = "";
+        // hide window
         $("#add_TimeBlock_Event").modal("hide");
 
         //wait .5 seconds then reset to defaults, so user doesn't see happen

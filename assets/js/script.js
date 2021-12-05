@@ -74,9 +74,11 @@ function set_BTN_Defaults(){
             
             let database = {
                 daily : {
-                    [(moment().format("HH"))]: {
-                        description: description_Holder,
-                        state: 1
+                    [(moment().format("YYYYMMDD"))]: {
+                        [(moment().format("HH"))]: {
+                            description: description_Holder,
+                            state: 1
+                        }
                     }
                 }
             };
@@ -168,7 +170,7 @@ function build_Schedule(){
     
     // GET database
     let database = JSON.parse(localStorage.getItem(database_Name));
-    
+
     // Extract settings
     database_Settings = database.settings;
     // start of business hours. //
@@ -182,7 +184,8 @@ function build_Schedule(){
     let database_TimeFormat = database_Settings.defaults.timeFormat;
     // console.log("database_TimeFormat: ",database_TimeFormat)
 
-    
+    let database_Daily = database.daily;
+
     //-- Building HTML --//
     
     // Grabbing div
@@ -223,12 +226,13 @@ function build_Schedule(){
             div.innerHTML = (
                 "<span class='hour'>"+database_Times[i][database_TimeFormat]+
                 "</span>"+
-                "<span class='description' id=description_"+database_Times[i][database_TimeFormat]+
-                "'></span>"
-                // +
-                // '<br><button type="button" class="btn btn-primary" data-toggle="modal"'+
-                // 'data-target="#add_TimeBlock_Event">Add Event</button></span>"'
+                "<span class='description' id=description_"+database_Times[i][database_TimeFormat]+"'>"
             ); 
+            div.innerHTML = div.innerHTML + "</span>";
+            //database_Daily
+            if (database_Daily[i]) {
+                '<span class="description" id="description_08:00 am">database_Daily[i].description</span>'
+            }
             schedule_Today.appendChild(div);
         }        
     };

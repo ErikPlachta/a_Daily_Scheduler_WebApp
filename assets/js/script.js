@@ -69,19 +69,6 @@ $("#modal_EventDescription").bind('input propertychange', function(){
     }
 });
 
-$(".btn-clear").click( function() {
-    $("#modal_EventDescription").val('');
-    
-    var description_Holder = $("#modal_EventDescription").val();
-
-    // If NO description and pressed Save, prompt delete
-    if ((description_Holder.trim().length != 0 ) && $(".btn-clear")) {
-        
-        set_BTN_Cancel();
-        set_BTN_Delete();
-    }
-});
-
 // set modal buttons to default configurations
 function set_BTN_Defaults(){
     
@@ -94,16 +81,18 @@ function set_BTN_Defaults(){
     
     
     // CLEAR Button - - EVENT LISTENER
-    $("btn-clear").click( function() {
+    $(".btn-clear").click( function() {
+        // grab if current description
+        var description_Holder = $("#modal_EventDescription").val();
+        // earase current description
         $("#modal_EventDescription").val('');
-        console.log("clear");
-
-        // // If NO description and pressed Save, prompt delete
-        // if (description_Holder.trim() == "" && $(".btn-clear")) {
-        //     console.log("description_Holder:",description_Holder, "and .btn-save pressed.");
-        //     set_BTN_Cancel();
-        //     set_BTN_Delete();
-        // }
+    
+        // If description cleared and clicked on clear
+        if ((description_Holder.trim().length != 0 ) && $(".btn-clear")) {
+            
+            set_BTN_Cancel();
+            set_BTN_Delete();
+        }
     });
     
     // SAVE Button - EVENT LISTENER
@@ -133,12 +122,6 @@ function set_BTN_Defaults(){
             $("#add_TimeBlock_Event").modal("hide");
             // empty description on save for new edits
             $("#modal_EventDescription").val('');
-        }
-        // If NO description and pressed Save, prompt delete
-        else if (description_Holder.trim() == "" && $(".btn-save")) {
-            console.log("description_Holder:",description_Holder, "and .btn-save pressed.");
-            set_BTN_Cancel();
-            set_BTN_Delete();
         }
     });
     console.log("updated btns to default"); // TODO:: 12/04/2021 #EP || Delete once done testing

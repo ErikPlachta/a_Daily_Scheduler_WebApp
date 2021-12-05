@@ -1,4 +1,4 @@
-save/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
 //-- GLOBALS -> START
 
 // DIV containin all times
@@ -61,15 +61,15 @@ $("#modal_EventDescription").bind('input propertychange', function(){
 // set modal buttons to default configurations
 function set_BTN_Defaults(){
     
-    // TODO:: 12/04/2021 #EP ||  be 100% sure I know what this is doing
-    
-
+    // If they exist, replace extra buttons
     $(".btn-cancel").replaceWith('<button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>');
     $(".btn-delete").replaceWith('<button type="button" class="btn btn-primary btn-save">Save</button>');
+
+    // Make sure default alert is set
     $( "#event_Message").html('<span class="alert alert-primary" role="alert"><i>Add Description & press <em class="badge badge-primary">Save</em> to create an event.</i></span>');
     
     
-    // Event Listner when clicked Save
+    // Add Event Listner when clicked Save
     $(".btn-save").click(function () {
         
         console.log(".btn-save") // TODO:: Delete when done testing
@@ -79,7 +79,6 @@ function set_BTN_Defaults(){
 
         // get description values user has typed in
         var description_Holder = $("#modal_EventDescription").val();
-        
         
         // If Description was filled out our had a value already ( because event existed )
         if (description_Holder != '') {
@@ -99,7 +98,7 @@ function set_BTN_Defaults(){
             set_Database(database);
 
             // Update HTML
-            document.getElementById("description_"+ time_holder.innerText).innerText = description_Holder;          
+            document.getElementById("description_"+ time_holder.innerText).innerText = description_Holder;
 
             //re-hide the modal
             $("#add_TimeBlock_Event").modal("hide");
@@ -118,52 +117,58 @@ function set_BTN_Defaults(){
     
 }
 
-function set_BTN_Close(){
-        $(".btn-close").click(function () {
-        console.log(".btn-close");
-        // $(".btn-cancel").replaceWith('<button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>')
-        // $(".btn-save").replaceWith('<button type="button" class="btn btn-primary btn-save">Save</button>')
+// make sure default configuration
+function set_BTN_Close(){ 
+    $(".btn-close").click(function () { 
+    set_BTN_Defaults();
     });
-
 }
 
+//Replace Close, create cancel, make event listener
 function set_BTN_Cancel(){
+    // replace close with cancel
     $(".btn-close").replaceWith('<button type="button" class="btn btn-secondary btn-cancel" data-dismiss="modal">Cancel</button>')
+    // at listner to set to defaults if canceled
     $(".btn-cancel").click(function () {
-        console.log(".btn-cancel");
         set_BTN_Defaults();    
     });
-    
-
-}
-
+};
+// Update Alert, replace Save with Delete, make event listener
 function set_BTN_Delete(){
-    //Replace Save and Close then create event listeners
-
     // Add ALERT Warning
     $( "#event_Message").html('<span class="alert alert-danger" role="alert"><i>Press <em class="badge badge-danger">Delete</em> to remove event.</i></span>');
-    
     // Replace save with delete
-    $(".btn-save").replaceWith('<button type="button" class="btn btn-danger btn-delete" data-dismiss="modal">Delete</button>')
-    
+    $(".btn-save").replaceWith('<button type="button" class="btn btn-danger btn-delete" data-dismiss="modal">Delete</button>')    
     // Add event listener
     $(".btn-delete").click(function () {
-        console.log(".btn-delete");
+        console.log(".btn-delete");        
         
-        //delete event content
-        document.getElementById("description_"+ (time_holder.innerText.split(" ")[0])).innerText = "";
-        // hide window
+        //delete event content for time by making description empty
+        let database = {
+            daily : {
+                [(moment().format("YYYYMMDD"))]: {
+                    [time_holder.innerText]: {
+                        description: '',
+                        state: 0
+                    }
+                }
+            }
+        };
+        // Update Database
+        set_Database(database);
+       
+        // Delete from daily scheduler
+        document.getElementById("description_"+ time_holder.innerText).innerText = '';
+        
+        // Hide Window to go back to calendar
         $("#add_TimeBlock_Event").modal("hide");
 
-        //wait .5 seconds then reset to defaults, so user doesn't see happen
+        //wait .5 seconds then reset buttons to defaults ( once off screen )
         setTimeout(function() {
             set_BTN_Defaults();    
           }, 500);
-
-        // set back to defaults
-        
     });
-}
+};
 
 //-- MODAL -> END
 /* -------------------------------------------------------------------------- */

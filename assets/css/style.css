@@ -18,6 +18,24 @@ textarea{
   padding: 10px;
 }
 
+/* animations for ALL spans - includes time slots and X to close button content */
+span #disabled{
+  -webkit-transition: background .2s ease-in-out;
+  transition: background .2s ease-in-out;
+}
+
+.time-block{
+  
+  -webkit-transition: height 2s linear 1s;
+  transition: height 2s linear 1s;
+  transition-duration: 2s;
+
+}
+
+button {
+  box-shadow: .05rem -.05rem 0rem rgba(0,0,0,.5);
+}
+
 /* -------------------------------------------------------------------------- */
 /*-- HEADER -> START  --*/
 .jumbotron {
@@ -52,6 +70,9 @@ textarea{
 /* -------------------------------------------------------------------------- */
 /*-- EVENTS -> START --*/
 
+div#schedule_Today {
+  display: none;
+}
 
 /* Parent container for each hour */
 .row {
@@ -120,16 +141,8 @@ textarea{
 /* -------------------------------------------------------------------------- */
 /*-- MODAL -> START --*/
 
-/* animations for ALL spans - includes time slots and X to close button content */
-span{
-  -webkit-transition: background .2s ease-in-out;
-  transition: background .2s ease-in-out;
-  transition-duration: 2s;
-
-}
-
-button {
-  box-shadow: .05rem -.05rem 0rem rgba(0,0,0,.5);
+.btn-cancel {
+  display: none;
 }
 
 /* resize button */

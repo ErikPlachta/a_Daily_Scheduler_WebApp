@@ -10,11 +10,17 @@ const today = function() {return moment().format("dddd, MMMM Do YYYY")};
 // Update to Today
 document.getElementById("currentDay").innerText = today();
 
+
+// Total Hours in Day
+let hours_Day = 24;
+
 // hour in 24 hour format
 const now = function() { return moment().format("HH")};
 
 const now_full = function() {return moment().format("hh:mm:ss A")};
 document.getElementById("currentTime").innerText = now_full();
+
+
 
 //-- GLOBALS -> END
 /* -------------------------------------------------------------------------- */
@@ -191,11 +197,7 @@ function build_Schedule(){
     /* Builds the calendar */
     
     console.log("//-- function build_Schedule()");
-    
     //-- Defining Local Variables
-
-    // in military time //
-    let hours_Day = 24;
 
     
     // GET database
@@ -279,6 +281,8 @@ function build_Schedule(){
             schedule_Today.appendChild(div);
         }        
     };
+    // show ONCE loaded
+    document.getElementById("schedule_Today").style.display = "block";
 };
   
 
@@ -464,7 +468,7 @@ function set_Database(entry) {
 
 /* DATABASE MANGEMENT -> END */
 /* -------------------------------------------------------------------------- */
-/* RUNNING */
+/* VERIFY DATABASE --> START */
 
 console.log("//-- script.js Running set_Database()...")
 
@@ -667,17 +671,52 @@ verify_build_Database();
 build_Schedule();
 
 set_BTN_Defaults();
-/* RUNNING -> END */
+/* VERIFY DATABASE --> END */
 /* -------------------------------------------------------------------------- */
-/* RE_RUN EVERY 1 Minute */
+/* VERIFY TIMEBLOCK_TENSE --> START */
+
+
+ //-- Update if times pass
+function set_TimeBlock_Tense(){
+
+    // Bool for present tense 
+    let hour_Current = false;
+
+    // Itterate each business hour
+    $(".row").each(function(index, el) {
+        
+        // Present-Tense
+        if(el.id == moment().format("H:00 A")){
+            document.getElementById(el.id).classList = "present row time-block";
+            hour_Current = true; //Makes sure only 1 hour is current
+        } 
+        // Future-Tense
+        else if (hour_Current == true) {
+            document.getElementById(el.id).classList = "future row time-block";
+        } 
+        // Past-Tense
+        else {
+            document.getElementById(el.id).classList = "past row time-block";
+        }
+    });
+};
+//-- set_TimeBlock_Tense() --> END
+set_TimeBlock_Tense();
+// console.log((moment().format("H:00 a")))
+
+/* VERIFY TIMEBLOCK_TENSE --> END */
+/* -------------------------------------------------------------------------- */
+/* RUN-LOOP --> START */
 
 // Event that re-runs every X miliseconds to keep up to date
 setInterval(function () {
-    $(".row").each(function(index, el) {
-    //   auditTask(el);
-    console.log(el)
-    });
+    
+    //Update Date
     document.getElementById("currentDay").innerText = today();
+    //Update Time
     document.getElementById("currentTime").innerText = now_full();
-}, 100000);
-// }, 1800000); // 30 minutes
+
+    set_TimeBlock_Tense();
+}, 1000); // }, 1800000); // 30 minutes
+
+/* RUN-LOOP --> END */

@@ -36,7 +36,10 @@
         <h1 class="display-3">
           <span class="far fa-calendar-check" id="appIcon"></span> A Daily Scheduler
         </h1>
-        <footer class="blockquote-footer" id="appTagline">A basic calendar app using browser local storage</footer>
+        <footer class="blockquote-footer" id="appTagline">
+          A basic calendar App demonstrating JavaScript's flexability with
+          Third-Party APIs.
+        </footer>
       </blckquote>
       
       <!-- ---------------------------------------------------------------- --->
@@ -66,7 +69,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h3 class="modal-title" id="add_TimeBlock_Event_Title"><span id='event_ScheduleUpdate'>Schedule an</span> event for <span id='time_holder'>00:00</span></h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close btn btn-outline-danger" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -75,10 +78,7 @@
               <textarea class="form-control" id="modal_EventDescription" rows="3" placeholder='This event is for...'></textarea>
               
           </div>
-          <div class='text-center'>
-            <p id='event_Message'>
-            </p>
-          </div>
+          <div class='modal-message' id='event_Message'></div>
           <div class="modal-footer d-flex flex-row">
             <button class="btn btn-secondary btn-clear mr-auto p-2" id="clear">Clear</button>
             <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>

@@ -118,11 +118,18 @@ button {
 /* -------------------------------------------------------------------------- */
 /*-- EVENT MODAL -> START --*/
 
+.modal-content {
+  background: transparent;
+  box-shadow: 1rem 1rem 1rem rgba(0,0,0,.25);
+}
 
 /* Event Creator Title Section */
 .modal-header {
   background: var(--color_Primary);
   color: var(--title_Color);
+  margin: 0;
+  padding: 0 .5rem;
+  border-radius: .25rem .25rem 0 0;
 }
 .modal-header h3{
   font-size: 1.7rem;
@@ -132,6 +139,22 @@ button {
   color: var(--color_Accent);
 }
 
+.modal-header .close {
+  color: white;
+  font-size: 2rem;
+  margin: 0 -.5rem;
+  padding: .2rem .25rem;
+  opacity: 1;
+  /* border: 1px solid white; */
+}
+.modal-header .close span {
+  margin: 0;
+  padding: 0;
+}
+
+.modal-body {
+  background-color: var(--bg_Section);
+}
 .modal_EventDescription {
   color: var(--color_Primary);
   font-weight: bold;
@@ -146,29 +169,14 @@ textarea.form-control {
   /* color: var(--title_Font); */
   box-shadow: var(--boxShadow_inset_Top_Right);
   padding: 10px;
-  opacity: .5;
-  font-size: 1.25rem;
+  opacity: .8;
+  /* font-size: 1.25rem; */
 }
 
 textarea.form-control:focus {
   opacity: 1;
-  border: none;
-}
-
-.btn-close {
-  display: none;
-}
-
-/* Make close square */
-button.close span {
-  font-size: 1.5rem;
-  border-radius: .5rem;
-  background: rgba(215, 62, 77, 0.75);
-  border: .2rem solid rgba(215, 62, 77, 0.75) !important;
-  color: #fff;
-  padding: 0rem .5rem .25rem .5rem;
+  /* border: none; */
   box-shadow: var(--boxShadow_inset_Top_Right);
-  /* margin: 5rem; */
 }
 
 /* Summary of what Time Block is for */
@@ -189,8 +197,24 @@ button.close span {
   transition: all .3s ease-in-out;
 }
 
-#event_Message {
+.modal-message{
   padding: .5rem;
+  /* height: 5rem; */
+  background-color: var(--color_Primary);
+  width: 100%;
+  text-align: center;
+}
+
+.modal-message .alert {
+  /* margin-top: 5rem; */
+   padding: 0 1rem;
+/*  margin: 0; */
+  
+  position:relative;
+}
+
+.modal-footer {
+  background-color: var(--color_Primary);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -260,3 +284,23 @@ button.close span {
 
 /*-- TIMEBASED -> END --*/
 /* -------------------------------------------------------------------------- */
+
+@media screen and (max-width: 450px) {
+  .modal-dialog-centered {
+    /* align-items: none; */
+    align-items:inherit;
+  }
+  h3.modal-title{
+    /* height: 10rem !important; */
+    font-size: 1.25rem;
+    margin: 2.5rem;
+    font-weight: 800;
+  }
+
+  .container_DateTime {
+    font-size: 1rem;
+    flex-direction: column;
+    margin: 0;
+    padding: .25rem;
+  }
+}

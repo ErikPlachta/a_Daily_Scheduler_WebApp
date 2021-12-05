@@ -42,7 +42,10 @@ $('#add_TimeBlock_Event').on('shown.bs.modal', function (event) {
     // $( "#modal_EventDescription" ).html({variable});
     if (description_Holder != ""){
         // Add alert message indicating you're updating an existing event
-        $( "#event_Message").html('<span class="alert alert-info" role="alert"><i>Updated event and press <em class="badge badge-primary">Save</em> to change event.</i></span>');
+        $( "#event_Message").html(
+            '<span class="alert alert-info" role="alert">'
+            +'<i>Modifying event</span>'
+        );
         
         // Update Text Area with content from within calendar
         $("#modal_EventDescription").replaceWith('<textarea class="form-control" id="modal_EventDescription" rows="3" placeholder="This event is for...">'+description_Holder+'</textarea>');
@@ -72,12 +75,16 @@ $("#modal_EventDescription").bind('input propertychange', function(){
 // set modal buttons to default configurations
 function set_BTN_Defaults(){
     
+    // Make sure content is empty
+    $("#modal_EventDescription").val('');
     // If they exist, replace extra buttons
     $(".btn-cancel").replaceWith('<button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>');
     $(".btn-delete").replaceWith('<button type="button" class="btn btn-primary btn-save">Save</button>');
 
     // DEFAULT ALERT
-    $( "#event_Message").html('<span class="alert alert-primary" role="alert"><i>Add Description & press <em class="badge badge-primary">Save</em> to create an event.</i></span>');
+    $( "#event_Message").html(
+        '<span class="alert alert-primary" role="alert">'
+        +'<i>Create new event</i></span>');
     
     
     // CLEAR Button - - EVENT LISTENER
@@ -180,6 +187,11 @@ function set_BTN_Delete(){
           }, 500);
     });
 };
+
+// When Modal Closed
+$("#add_TimeBlock_Event").on("hidden.bs.modal", function () {
+    set_BTN_Defaults();
+});
 
 //-- MODAL -> END
 /* -------------------------------------------------------------------------- */

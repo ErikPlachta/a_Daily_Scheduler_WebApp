@@ -1,4 +1,4 @@
-/* -------------------------------------------------------------------------- */
+save/* -------------------------------------------------------------------------- */
 //-- GLOBALS -> START
 
 // DIV containin all times
@@ -235,15 +235,28 @@ function build_Schedule(){
             else {
                 div.setAttribute("class","future row time-block");
             }
-            div.innerHTML = (
-                "<span class='hour'>"+database_Times[i][database_TimeFormat]+
-                "</span>"+
-                "<span class='description' id='description_" + (database_Times[i][database_TimeFormat]) +"'>"
-                ); 
-            div.innerHTML = div.innerHTML + "</span>";
+  
             //database_Daily
-            if (database_Daily[i]) {
-                '<span class="description" id="description_08:00 am">database_Daily[i].description</span>'
+            if (database_Times[i][database_TimeFormat] in database_Daily[(moment().format("YYYYMMDD"))]) {
+                
+                div.innerHTML = (
+                    "<span class='hour'>"+database_Times[i][database_TimeFormat]
+                    +"</span>"
+                    +"<span class='description' id='description_"
+                    +(database_Times[i][database_TimeFormat])
+                    +"'>"
+                    +[database_Daily[(moment().format("YYYYMMDD"))][database_Times[i][database_TimeFormat]].description]
+                    +"</span>"
+                 );
+                // console.log("dbdaily[i]: ",database_Times[i][database_TimeFormat]);
+            } else {
+                div.innerHTML = (
+                    "<span class='hour'>"+database_Times[i][database_TimeFormat]
+                    +"</span>"
+                    +"<span class='description' id='description_"
+                    +(database_Times[i][database_TimeFormat])
+                    +"'></span>"
+                );        
             }
             schedule_Today.appendChild(div);
         }        

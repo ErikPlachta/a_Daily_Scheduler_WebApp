@@ -118,8 +118,34 @@ textarea{
 
 /*-- TIMEBASED -> END --*/
 /* -------------------------------------------------------------------------- */
-/*-- TIMEBASED -> END --*/
+/*-- MODAL -> START --*/
 
-/*-- EVENT -> END --*/
+/* animations for ALL spans - includes time slots and X to close button content */
+span{
+  -webkit-transition: background .2s ease-in-out;
+  transition: background .2s ease-in-out;
+  transition-duration: 2s;
+
+}
+
+
+/* resize button */
+button.close {
+  padding: .25rem .25rem !important;  
+}
+/* make square */
+button.close span {
+  font-size: 1rem;
+  border-radius: .5rem;
+  background: rgba(215, 62, 77, 0.75);
+  border: .2rem solid rgba(215, 62, 77, 0.75) !important;
+  color: #fff;
+  padding: 0 .25rem;
+  
+  /* margin: 5rem; */
+ 
+}
+
+/*-- MODAL -> END --*/
 /* -------------------------------------------------------------------------- */
 

@@ -102,7 +102,7 @@ button {
   padding: 0 1rem;
   box-shadow: var(--boxShadow_inset_Top_Right) !important;
   border: 1px solid var(--color_Primary);
-  border-radius: .25rem;
+  border-radius: 1rem;
 }
 .container_DateTime:hover{
   -webkit-transition: background .2s ease-in-out;

@@ -286,9 +286,11 @@ textarea.form-control:focus {
 /* -------------------------------------------------------------------------- */
 
 @media screen and (max-width: 450px) {
+  /* MODAL */
   .modal-dialog-centered {
     /* align-items: none; */
-    align-items:inherit;
+    align-items: none;
+    
   }
   h3.modal-title{
     /* height: 10rem !important; */
@@ -296,11 +298,23 @@ textarea.form-control:focus {
     margin: 2.5rem;
     font-weight: 800;
   }
+  
 
-  .container_DateTime {
-    font-size: 1rem;
+  /* landing page */
+
+  .blockquote h1 {
+    font-size: 3rem;
+  }
+
+  .container_DateTime{
     flex-direction: column;
-    margin: 0;
+    width: 100%;
     padding: .25rem;
+    margin: 0;
+    min-width: 300px;
+  }
+  .container_DateTime p {
+    font-size: .8rem;
+    width: 100%;
   }
 }

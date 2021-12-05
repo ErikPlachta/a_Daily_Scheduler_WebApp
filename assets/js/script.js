@@ -363,21 +363,30 @@ function set_Database(entry) {
                 
                 // If the current DAY is in the database already
                 if(daily[key] != undefined){
-                    
                     // set Last Login time to now
                     daily[key].login_Last = now_full();
-                    
                 }
-                // IF Today isn't in there, build it
-                else
-                {
-                    console.log("Key",key, "has been added to database.")
+                
+                // IF date isn't in database, add it.
+                else {
+                    console.log("Key",key, "not yet enetered by EU. Added to database.")
                     //No there yet so adding it
                     daily[key] = entry.daily[key];
                 }
             };
+            
+            //Itterate through dates in entries, update database accordingly.
+            for(date in entry.daily){
+                
+                for (time in entry.daily[date]){
+                    console.log(entry.daily[date][time]);
+                    daily[date][time] = entry.daily[date][time];
+                }
+            }
+            
             // Merge daily logs together from curent and entry
-            daily = Object.assign({},daily, entry.daily);
+            // daily = Object.assign({},daily, entry.daily);
+            console.log("Daily: ",daily)
         };
 
         //-- If setting edit is saved --//

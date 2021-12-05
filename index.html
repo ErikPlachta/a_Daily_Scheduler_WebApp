@@ -21,50 +21,36 @@
       href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
       rel="stylesheet"
     />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
-            integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer">
-    </script>
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>A Daily Scheduler</title>
   </head>
 
   <body>
+    
+    <!------------------------------------------------------------------------->
+    <!-- HEADER -> END -->
+
     <header class="jumbotron">
       
-      
-      <blckquote class="blockquote p-3 mb-2">
+      <blckquote class=" d-flex flex-column blockquote mb-2" id="appName">
         <h1 class="display-3">
-          <span class="far fa-calendar-check"></span> A Daily Scheduler
+          <span class="far fa-calendar-check" id="appIcon"></span> A Daily Scheduler
         </h1>
-        <footer class="blockquote-footer">A basic calendar app using browser local storage</footer>
+        <footer class="blockquote-footer" id="appTagline">A basic calendar app using browser local storage</footer>
       </blckquote>
       
       <!-- ---------------------------------------------------------------- --->
       <!-- DATE-TIME CONTAINER -> START -->
       
-      <section class="container_DateTime p-3 mb-2">
-        <p class="lead" id="todayDate">Today is <span id="currentDay"></span></p>
-        <p class="lead" id="pageRefreshed">Page Last Refreshed at <span id="currentTime"></span></p>
-
-        <!-- ---------------------------------------------------------------- --->
-        <!-- TOGGLE 12-24 -> END -->
-        <!-- <section class="timeFormat">
-          <span class="">Select Time Format</span>
-          
-            <input type="radio" id="radio_12" name="timeFormat" class="" checked>
-            <label class="" for="radio_12">12</label>
-          
-            <input type="radio" id="radio_24" name="timeFormat" class="">
-            <label class="" for="radio_24">24</label>
-          
-        </section> -->
-        <!-- TOGGLE 12-24 -> END -->
+      <section class="d-flex d-inline-flex justify-content-center container_DateTime">
+        <p class="lead p-1" id="todayDate">Today is <span id="currentDay"></span>,</p>
+        <p class="lead p-1" id="pageRefreshed">and it's currently <span id="currentTime"></span></p>
       </section>
       <!-- DATE-TIME CONTAINER -> END -->
+
     </header>
-    
+
+    <!-- HEADER -> END -->
     <!------------------------------------------------------------------------->
     <!-- TIMES -> START -->
 
@@ -106,7 +92,12 @@
     <!------------------------------------------------------------------------->
     
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+            integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer">
+    </script>
     
     <!-- for modal -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>

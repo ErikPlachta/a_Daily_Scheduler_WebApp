@@ -8,6 +8,7 @@
   --color_Accent: rgb(111, 255, 233);
   --color_Accent_75a: rgb(111, 255, 233,.75);
   --color_shadow_025_black:  rgba(0,0,0,.25);
+  --color_shadow_01_black:   rgba(0,0,0,.1);
 
   /* TITLE */
   --title_Color: #fefdff;
@@ -24,11 +25,17 @@
   
   /* BOX SHADOWS */
   --boxShadow_Top: 0 -.1rem .5rem var(--color_shadow_025_black); /* offset-x | offset-y | blur-radius | color */
-  --boxShadow_top_hover_black: 0 -.75rem 1rem var(----color_shadow_025_black); /* offset-x | offset-y | blur-radius | color */
-  --boxShadow_bottom_Inset:  inset 0px -11px 8px -10px var(--color_shadow_025_black); /* offset-x | offset-y | blur-radius | color */
-  --boxShadow_bottom_accent_Primary: 0 .01rem .5rem var(--color_Accent_Primary); /* offset-x | offset-y | blur-radius | color */
+  --boxShadow_top_hover_black_25a: 0 -.75rem 1rem var(--color_shadow_025_black); /* offset-x | offset-y | blur-radius | color */
+  --boxShadow_top_hover_black_1a:  0 -.1rem .5rem var(--color_shadow_01_black); /* offset-x | offset-y | blur-radius | color */
+
+  --boxShadow_inset_Top:  inset 0px 11px 10px -10px var(--color_shadow_025_black); /* offset-x | offset-y | blur-radius | color */
+  --boxShadow_Inset_bottom:  inset 0px -11px 8px -10px var(--color_shadow_025_black); /* offset-x | offset-y | blur-radius | color */
+  --boxShadow_inset_Top_Right:  inset -10px 9px 7px -10px var(--color_shadow_025_black); /* offset-x | offset-y | blur-radius | color */
+  --boxShadow_bottom_accent_Primary: 0 .01rem .4rem var(--color_Accent); /* offset-x | offset-y | blur-radius | color */
   
-  --shadow_1px_25a: 1px solid var(--color_shadow_025_black);
+  /* BORDERS */
+  --border_shadow_1px_25a: 1px solid var(--color_shadow_025_black);
+  --border_shadow_1px_1a: 1px solid var(--color_shadow_01_black);
 }
 
 /* :ROOT END */
@@ -40,96 +47,130 @@ body {
   font-size: 16px;
   line-height: 1;
   box-sizing: border-box; /* prevent padding overflow */
+  background-color: var(--bg_Body);
 }
 
-textarea{
-  background: transparent;
-  border: none;
-  resize: none;
-  color: #000000;
-  border-left: 1px solid black;
-  padding: 10px;
-}
 
 /* animations for ALL spans - includes time slots and X to close button content */
-span #disabled{
+span {
   -webkit-transition: background .2s ease-in-out;
   transition: background .2s ease-in-out;
 }
 
-.time-block{
-  
-  -webkit-transition: height 2s linear 1s;
-  transition: height 2s linear 1s;
-  transition-duration: 2s;
-
-}
-
 button {
-  box-shadow: .05rem -.05rem 0rem rgba(0,0,0,.5);
+  /* box-shadow: .05rem -.05rem 0rem rgba(0,0,0,.5); */
+  box-shadow: var(--boxShadow_inset_Top_Right);
 }
 
 /* -------------------------------------------------------------------------- */
 /*-- HEADER -> START  --*/
 .jumbotron {
   text-align: center;
-  background-color: transparent;
-  color: black;
+  background-color: var(--color_Primary);
+  color: var(--title_Color);
   border-radius: 0;
-  border-bottom: 10px solid black;
-  /* margin: 2rem; */
-  padding: 2rem; 
+  border-bottom: .25rem solid var(--color_shadow_025_black);
+  box-shadow: var(--boxShadow_bottom_accent_Primary);
   
-}
-/* Header holding date time stamp + toggle button */
-.container_DateTime {
-  box-shadow: inset 0rem 0rem .25rem rgba(0,0,0,.5);
+  /* margin: 2rem; */
+  padding: .5rem 2rem; 
+  -webkit-transition: background .2s ease-in-out;
+  transition: background .2s ease-in-out;
 }
 
-.timeFormat{
-  /* margin: ; */
-  /* align-items: center; */
-  /* align-content: center; */
-  /* justify-content: center; */
-  /* border-left: 1px solid black; */
+.far,
+.blockquote-footer {
+  color: var(--color_Accent);
+}
+#appName:hover {
+  color: var(--color_Accent);
+}
+
+#appName:hover #appIcon,
+#appName:hover #appTagline {
+/* .jumptron:hover ~ .blockquote-footer { */
   
+  color: var(--title_Color) !important;
 }
-/* Pill around Time-Selection */
-.timeFormat span label {
-  padding: .5rem 1rem;
+
+/* Header holding date time stamp + toggle button */
+.container_DateTime {
+  background-color: var(--bg_Body);
+  color: var(--color_Primary);
+  
+  margin: 1rem 0 0 0;
+  padding: 0 1rem;
+  box-shadow: var(--boxShadow_inset_Top_Right) !important;
+  border: 1px solid var(--color_Primary);
+  border-radius: .25rem;
 }
+.container_DateTime:hover{
+  -webkit-transition: background .2s ease-in-out;
+  transition: background .2s ease-in-out;
+  border: 1px solid var(--color_Accent);
+}
+.container_DateTime p {
+  margin: 0; /* makes sure top and bottom are = */
+}
+
 
 /*-- HEADER -> END  --*/
 /* -------------------------------------------------------------------------- */
-/*-- EVENTS -> START --*/
+/*-- EVENT MODAL -> START --*/
 
-div#schedule_Today {
+
+/* Event Creator Title Section */
+.modal-header {
+  background: var(--color_Primary);
+  color: var(--title_Color);
+}
+.modal-header h3{
+  font-size: 1.7rem;
+}
+
+.modal-header h3:hover {
+  color: var(--color_Accent);
+}
+
+.modal_EventDescription {
+  color: var(--color_Primary);
+  font-weight: bold;
+
+
+}
+
+/* Description area */
+textarea.form-control {
+  border: var(--border_shadow_1px_25a);
+  background: transparent;
+  /* color: var(--title_Font); */
+  box-shadow: var(--boxShadow_inset_Top_Right);
+  padding: 10px;
+  opacity: .5;
+  font-size: 1.25rem;
+}
+
+textarea.form-control:focus {
+  opacity: 1;
+  border: none;
+}
+
+.btn-close {
   display: none;
 }
 
-/* Parent container for each hour */
-.row {
-  white-space: pre-wrap;
-  height: 80px;
-  border-top: 1px solid white;
-  cursor: pointer;
-  color: black;
+/* Make close square */
+button.close span {
+  font-size: 1.5rem;
+  border-radius: .5rem;
+  background: rgba(215, 62, 77, 0.75);
+  border: .2rem solid rgba(215, 62, 77, 0.75) !important;
+  color: #fff;
+  padding: 0rem .5rem .25rem .5rem;
+  box-shadow: var(--boxShadow_inset_Top_Right);
+  /* margin: 5rem; */
 }
 
-/* Styling for the hour text itself */
-.hour {
-  padding: 1rem;
-  background-color: #ffffff;
-  color: #000000;
-  border-top: 1px dashed #000000;
-  font-weight: 600;
-}
-
-/* Actual container holding time-block editor */
-.time-block{
-  text-align: center;
-  border-radius: 15px;
-}
 /* Summary of what Time Block is for */
 .description{
   white-space: pre-wrap;
@@ -154,6 +195,53 @@ div#schedule_Today {
 
 /* -------------------------------------------------------------------------- */
 /*-- TIMEBASED -> START --*/
+
+/* hides until loaded */
+#schedule_Today {
+  display: none;
+  -webkit-transition: background .2s ease-in-out;
+  transition: background .2s ease-in-out;
+  background-color: var(--bg_Section);
+  padding: 1rem 2rem;
+  width: 100%;
+  border-radius: 2rem;
+  box-shadow: var(--boxShadow_Top);
+}
+
+/* Parent container for each hour */
+.row {
+  white-space: pre-wrap;
+  height: auto;
+  cursor: pointer;
+  color: black;
+  box-shadow: var(--boxShadow_inset_Top_Right);
+}
+.row:hover  {
+  border: var(--border_shadow_1px_1a);
+  box-shadow: var(--boxShadow_top_hover_black_1a);
+  color: black;
+}
+
+/* Actual container holding time-block editor */
+.time-block{
+  height: 5rem;
+  text-align: center;
+  border-radius: 15px;
+  -webkit-transition: height 2s linear 1s;
+  transition: height 2s linear 1s;
+  transition-duration: 2s;
+}
+
+/* Styling for the hour text itself */
+.hour {
+  padding: 1rem;
+  border-radius: 15px 0 0 15px;
+  background-color: #ffffff;
+  color: #000000;
+  font-weight: 600;
+  box-shadow: var(--boxShadow_inset_Top_Right);
+}
+
 .past {
   background-color: #d3d3d3;
   color: white;
@@ -172,29 +260,3 @@ div#schedule_Today {
 
 /*-- TIMEBASED -> END --*/
 /* -------------------------------------------------------------------------- */
-/*-- MODAL -> START --*/
-
-.btn-cancel {
-  display: none;
-}
-
-/* resize button */
-button.close {
-  padding: .4rem .2rem !important;
-  
-}
-/* make square */
-button.close span {
-  font-size: 1.25rem;
-  border-radius: .5rem;
-  background: rgba(215, 62, 77, 0.75);
-  border: .2rem solid rgba(215, 62, 77, 0.75) !important;
-  color: #fff;
-  padding: 0 .25rem;
-  /* margin: 5rem; */
- 
-}
-
-/*-- MODAL -> END --*/
-/* -------------------------------------------------------------------------- */
-

@@ -69,13 +69,18 @@ $("#modal_EventDescription").bind('input propertychange', function(){
     }
 });
 
-// Button to clear text
-window.addEventListener('load', () => {
-    const button = document.querySelector('#clear');
-    button.addEventListener('click', () => {
-        document.querySelector('#modal_EventDescription').value = "";
-    });
-}); 
+$(".btn-clear").click( function() {
+    $("#modal_EventDescription").val('');
+    
+    var description_Holder = $("#modal_EventDescription").val();
+
+    // If NO description and pressed Save, prompt delete
+    if ((description_Holder.trim().length != 0 ) && $(".btn-clear")) {
+        
+        set_BTN_Cancel();
+        set_BTN_Delete();
+    }
+});
 
 // set modal buttons to default configurations
 function set_BTN_Defaults(){
@@ -84,24 +89,32 @@ function set_BTN_Defaults(){
     $(".btn-cancel").replaceWith('<button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>');
     $(".btn-delete").replaceWith('<button type="button" class="btn btn-primary btn-save">Save</button>');
 
-    // Make sure default alert is set
+    // DEFAULT ALERT
     $( "#event_Message").html('<span class="alert alert-primary" role="alert"><i>Add Description & press <em class="badge badge-primary">Save</em> to create an event.</i></span>');
     
     
-    // Add Event Listner when clicked Save
-    $(".btn-save").click(function () {
-        
-        console.log(".btn-save") // TODO:: Delete when done testing
+    // CLEAR Button - - EVENT LISTENER
+    $("btn-clear").click( function() {
+        $("#modal_EventDescription").val('');
+        console.log("clear");
 
-        let variable = document.getElementById("description_"+ (time_holder.innerText));
-        console.log(variable);
+        // // If NO description and pressed Save, prompt delete
+        // if (description_Holder.trim() == "" && $(".btn-clear")) {
+        //     console.log("description_Holder:",description_Holder, "and .btn-save pressed.");
+        //     set_BTN_Cancel();
+        //     set_BTN_Delete();
+        // }
+    });
+    
+    // SAVE Button - EVENT LISTENER
+    $(".btn-save").click(function () {
 
         // get description values user has typed in
         var description_Holder = $("#modal_EventDescription").val();
         
         // If Description was filled out our had a value already ( because event existed )
         if (description_Holder != '') {
-            
+            // Build what will be saved in database
             let database = {
                 daily : {
                     [(moment().format("YYYYMMDD"))]: {
@@ -112,16 +125,12 @@ function set_BTN_Defaults(){
                     }
                 }
             };
-            
-            // Update Database
+            // Update the Database
             set_Database(database);
-
-            // Update HTML
+            // Update HTML for time-block with saved Description
             document.getElementById("description_"+ time_holder.innerText).innerText = description_Holder;
-
-            //re-hide the modal
+            //Hide modal
             $("#add_TimeBlock_Event").modal("hide");
-            
             // empty description on save for new edits
             $("#modal_EventDescription").val('');
         }
@@ -234,7 +243,7 @@ function build_Schedule(){
            var div = document.createElement("div");
            
            
-        //    console.log(database_Times[i][12])
+           //console.log(database_Times[i][12])
            
            //update ID to be the hour
            div.setAttribute("id",database_Times[i][database_TimeFormat]);
@@ -245,13 +254,15 @@ function build_Schedule(){
            div.setAttribute("data-toggle","modal")
            div.setAttribute('data-target','#add_TimeBlock_Event');
            
-           // if time in the past
+           // Past-Tense
            if (now() > i){
             div.setAttribute("class","past row time-block");
             } 
+            // Present-Tense
             else if (now() == i) {
                 div.setAttribute("class","present row time-block");
             }
+            // Future-Tense
             else {
                 div.setAttribute("class","future row time-block");
             }
@@ -666,11 +677,7 @@ function verify_build_Database() {
     set_Database(a_DailyScheduler);
     
 };
-verify_build_Database();
 
-build_Schedule();
-
-set_BTN_Defaults();
 /* VERIFY DATABASE --> END */
 /* -------------------------------------------------------------------------- */
 /* VERIFY TIMEBLOCK_TENSE --> START */
@@ -686,7 +693,7 @@ function set_TimeBlock_Tense(){
     $(".row").each(function(index, el) {
         
         // Present-Tense
-        if(el.id == moment().format("H:00 A")){
+        if(el.id == (moment().format("hh:00 A"))){
             document.getElementById(el.id).classList = "present row time-block";
             hour_Current = true; //Makes sure only 1 hour is current
         } 
@@ -701,12 +708,19 @@ function set_TimeBlock_Tense(){
     });
 };
 //-- set_TimeBlock_Tense() --> END
-set_TimeBlock_Tense();
-// console.log((moment().format("H:00 a")))
+
+
 
 /* VERIFY TIMEBLOCK_TENSE --> END */
 /* -------------------------------------------------------------------------- */
 /* RUN-LOOP --> START */
+
+// ONCE Document is loaded
+$(document).ready( function(){
+    verify_build_Database();
+    build_Schedule();
+    set_BTN_Defaults();
+});
 
 // Event that re-runs every X miliseconds to keep up to date
 setInterval(function () {

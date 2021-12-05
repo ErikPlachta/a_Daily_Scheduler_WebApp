@@ -128,20 +128,23 @@ span{
 
 }
 
+button {
+  box-shadow: .05rem -.05rem 0rem rgba(0,0,0,.5);
+}
 
 /* resize button */
 button.close {
-  padding: .25rem .25rem !important;  
+  padding: .4rem .2rem !important;
+  
 }
 /* make square */
 button.close span {
-  font-size: 1rem;
+  font-size: 1.25rem;
   border-radius: .5rem;
   background: rgba(215, 62, 77, 0.75);
   border: .2rem solid rgba(215, 62, 77, 0.75) !important;
   color: #fff;
   padding: 0 .25rem;
-  
   /* margin: 5rem; */
  
 }

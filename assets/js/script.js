@@ -34,7 +34,7 @@ $('#add_TimeBlock_Event').on('shown.bs.modal', function (event) {
     // grab the inner text of SPAN holding description if it exists to update modal
     
     let description_Holder = document.getElementById("description_"+ (time_holder.innerText));
-    console.log("Detail grab",description_Holder.innerText);
+    // console.log("Detail grab",description_Holder.innerText);
     description_Holder = description_Holder.innerText;
     
     // let thisDate = (get_Database()).daily[(moment().format("YYYYMMDD"))];
@@ -131,7 +131,7 @@ function set_BTN_Defaults(){
             $("#modal_EventDescription").val('');
         }
     });
-    console.log("updated btns to default"); // TODO:: 12/04/2021 #EP || Delete once done testing
+    // console.log("updated btns to default"); // TODO:: 12/04/2021 #EP || Delete once done testing
     
 }
 
@@ -159,7 +159,7 @@ function set_BTN_Delete(){
     $(".btn-save").replaceWith('<button type="button" class="btn btn-danger btn-delete" data-dismiss="modal">Delete</button>')    
     // Add event listener
     $(".btn-delete").click(function () {
-        console.log(".btn-delete");        
+        // console.log(".btn-delete");        
         
         //delete event content for time by making description empty
         let database = {
@@ -200,7 +200,7 @@ $("#add_TimeBlock_Event").on("hidden.bs.modal", function () {
 function build_Schedule(){
     /* Builds the calendar */
     
-    console.log("//-- function build_Schedule()");
+    // console.log("//-- function build_Schedule()");
     //-- Defining Local Variables
 
     
@@ -307,7 +307,7 @@ function get_Database(){
 
     // Get Database
     let database_Current = JSON.parse(localStorage.getItem(database_Name));
-    console.log("database_Current: ",database_Current);
+    // console.log("database_Current: ",database_Current);
     // If database exists
     if (database_Current != null) {
         
@@ -372,9 +372,9 @@ function set_Database(entry) {
     }
     // If Database doesn't exist ( shouldn't happen ) 
     // TODO:: 11/27/2021 #EP || Welcome Message trigger?
-    else { 
-        console.log("// ./assets/js/script.js function set_Database(entry) - ELSE. ( see admin )");
-    };
+    // else { 
+    //     // console.log("// ./assets/js/script.js function set_Database(entry) - ELSE. ( see admin )");
+    // };
 
     // DATABASE VERIFICATION -> END // 
     //--------------------------------//
@@ -387,7 +387,7 @@ function set_Database(entry) {
         
         //-- If daily edit is saved --//
         if("daily" in entry){
-            console.log("Daily key exists in entry: ", daily);
+            // console.log("Daily key exists in entry: ", daily);
             // TODO:: 12/01 #EP || Get Hour and Description IF EU pressed save, prepare to write
             // Get daily value and updated it
             
@@ -399,7 +399,7 @@ function set_Database(entry) {
 
             // Build daily results
             for (key in entry.daily){
-                console.log("entry.daily[key]: ", key)
+                // console.log("entry.daily[key]: ", key)
                 
                 
                 // If the current DAY is in the database already
@@ -410,7 +410,7 @@ function set_Database(entry) {
                 
                 // IF date isn't in database, add it.
                 else {
-                    console.log("Key",key, "not yet enetered by EU. Added to database.")
+                    // console.log("Key",key, "not yet enetered by EU. Added to database.")
                     //No there yet so adding it
                     daily[key] = entry.daily[key];
                 }
@@ -420,19 +420,19 @@ function set_Database(entry) {
             for(date in entry.daily){
                 
                 for (time in entry.daily[date]){
-                    console.log(entry.daily[date][time]);
+                    // console.log(entry.daily[date][time]);
                     daily[date][time] = entry.daily[date][time];
                 }
             }
             
             // Merge daily logs together from curent and entry
             // daily = Object.assign({},daily, entry.daily);
-            console.log("Daily: ",daily)
+            // console.log("Daily: ",daily)
         };
 
         //-- If setting edit is saved --//
         if ("settings" in entry){
-            console.log("Settings key exist in entry: ", settings);
+            // console.log("Settings key exist in entry: ", settings);
             
             // Merge settings together from curent and entry
             settings = Object.assign({},settings, entry.settings);            
@@ -476,7 +476,7 @@ function set_Database(entry) {
 /* -------------------------------------------------------------------------- */
 /* VERIFY DATABASE --> START */
 
-console.log("//-- script.js Running set_Database()...")
+// console.log("//-- script.js Running set_Database()...")
 
 // MAKE SURE DATABASE EXISTS
 function verify_build_Database() {
@@ -664,7 +664,7 @@ function verify_build_Database() {
         }
     };
 
-    console.log("aDailyScheduler: ",a_DailyScheduler)
+    // console.log("aDailyScheduler: ",a_DailyScheduler)
     //TODO:: 12/01/2021 #EP || Add build database stuff here
 
     // localStorage.setItem("a_DailyScheduler",JSON.stringify(a_DailyScheduler));

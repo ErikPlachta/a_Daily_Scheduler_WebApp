@@ -20,24 +20,32 @@ document.getElementById("currentTime").innerText = now_full();
 /* -------------------------------------------------------------------------- */
 //-- MODAL -> START
 
+
 // Event when Event modal opened
 $('#add_TimeBlock_Event').on('shown.bs.modal', function (event) {
-    
-    // Update TIME
+    // Update TIME based on event block selected
     $( "#time_holder" ).text($(event.relatedTarget)[0].id);
+    // grab the inner text of SPAN holding description if it exists to update modal
     
-    // $( "#modal_EventDescription" ).text($(event.relatedTarget)[0].innerText);
-    let variable = document.getElementById("description_"+ (time_holder.innerText.split(" ")[0])).innerText;
+    let description_Holder = document.getElementById("description_"+ (time_holder.innerText));
+    console.log("Detail grab",description_Holder.innerText);
+    description_Holder = description_Holder.innerText;
+    
+    // let thisDate = (get_Database()).daily[(moment().format("YYYYMMDD"))];
     // console.log(document.getElementById("description_"+ (time_holder.innerText.split(" ")[0])));
     // $( "#modal_EventDescription" ).html({variable});
-    if (variable != ""){
+    if (description_Holder != ""){
+        // Add alert message indicating you're updating an existing event
         $( "#event_Message").html('<span class="alert alert-info" role="alert"><i>Updated event and press <em class="badge badge-primary">Save</em> to change event.</i></span>');
-        $("#modal_EventDescription").replaceWith('<textarea class="form-control" id="modal_EventDescription" rows="3" spellcheck="true" placeholder="This event is for...">'+variable+'</textarea>');
-    }
+        
+        // Update Text Area with content from within calendar
+        $("#modal_EventDescription").replaceWith('<textarea class="form-control" id="modal_EventDescription" rows="3" placeholder="This event is for...">'+description_Holder+'</textarea>');
+        
+    };
     
+    // Set FOCUS to text-area for typing
     $("#modal_EventDescription").trigger('focus');
-
-
+    
 });
 
 
@@ -60,10 +68,14 @@ function set_BTN_Defaults(){
     $(".btn-delete").replaceWith('<button type="button" class="btn btn-primary btn-save">Save</button>');
     $( "#event_Message").html('<span class="alert alert-primary" role="alert"><i>Add Description & press <em class="badge badge-primary">Save</em> to create an event.</i></span>');
     
+    
     // Event Listner when clicked Save
     $(".btn-save").click(function () {
         
         console.log(".btn-save") // TODO:: Delete when done testing
+
+        let variable = document.getElementById("description_"+ (time_holder.innerText));
+        console.log(variable);
 
         // get description values user has typed in
         var description_Holder = $("#modal_EventDescription").val();
@@ -75,19 +87,19 @@ function set_BTN_Defaults(){
             let database = {
                 daily : {
                     [(moment().format("YYYYMMDD"))]: {
-                        [(moment().format("HH"))]: {
+                        [time_holder.innerText]: {
                             description: description_Holder,
                             state: 1
                         }
                     }
                 }
             };
-            console.log(database);
+            
+            // Update Database
             set_Database(database);
-            // Update scheduler
-            document.getElementById("description_"+ (time_holder.innerText.split(" ")[0])).innerText = description_Holder;
-            //TODO:: Update Database
-            //set_Database();
+
+            // Update HTML
+            document.getElementById("description_"+ time_holder.innerText).innerText = description_Holder;          
 
             //re-hide the modal
             $("#add_TimeBlock_Event").modal("hide");
@@ -226,8 +238,8 @@ function build_Schedule(){
             div.innerHTML = (
                 "<span class='hour'>"+database_Times[i][database_TimeFormat]+
                 "</span>"+
-                "<span class='description' id=description_"+database_Times[i][database_TimeFormat]+"'>"
-            ); 
+                "<span class='description' id='description_" + (database_Times[i][database_TimeFormat]) +"'>"
+                ); 
             div.innerHTML = div.innerHTML + "</span>";
             //database_Daily
             if (database_Daily[i]) {

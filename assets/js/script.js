@@ -46,6 +46,11 @@ $('#add_TimeBlock_Event').on('shown.bs.modal', function (event) {
     // Set FOCUS to text-area for typing
     $("#modal_EventDescription").trigger('focus');
     
+    var val = $("#modal_EventDescription").val(); //store the value of the element
+    $("#modal_EventDescription").val(''); //clear the value of the element
+    $("#modal_EventDescription").val(val); //set that value back.  
+
+    
 });
 
 
@@ -57,6 +62,14 @@ $("#modal_EventDescription").bind('input propertychange', function(){
         set_BTN_Defaults();
     }
 });
+
+// Button to clear text
+window.addEventListener('load', () => {
+    const button = document.querySelector('#clear');
+    button.addEventListener('click', () => {
+        document.querySelector('#modal_EventDescription').value = "";
+    });
+}); 
 
 // set modal buttons to default configurations
 function set_BTN_Defaults(){

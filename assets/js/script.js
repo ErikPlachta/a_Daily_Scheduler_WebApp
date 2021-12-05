@@ -33,32 +33,34 @@ $('#add_TimeBlock_Event').on('shown.bs.modal', function (event) {
 
     let description_Holder = document.getElementById("description_"+ (time_holder.innerText.split(" ")[0])).innerText;
     console.log(description_Holder);
-    if ( description_Holder != "") {
+    if ( description_Holder.trim() != "") {
         // $( "#modal_EventDescription").text(document.getElementById("description_"+ (time_holder.innerText.split(" ")[0])).innerText);
         $( "#modal_EventDescription").text("test");
     } 
     else
     {
-        console.log(typeof description_Holder)    
+        console.log("else:",typeof description_Holder) 
     }
     
     // FOCUS onto text-area for typing
     $("#modal_EventDescription").trigger('focus');
 });
 
-// $("#modal_EventDescription").change(function(){
-//     alert("The text has been changed.");
-//   });
 
+// Event that if typed into Description and delete button is there, set to defaults
 $("#modal_EventDescription").bind('input propertychange', function(){
     // alert("The text has been changed.");
-    set_BTN_Defaults();
+
+    if($(".btn-delete").text() != ""){
+        set_BTN_Defaults();
+    }
 });
 
+// set modal buttons to default configurations
 function set_BTN_Defaults(){
     
     // TODO:: 12/04/2021 #EP ||  be 100% sure I know what this is doing
-    setTimeout( function() {
+    // setTimeout( function() {
 
         $(".btn-cancel").replaceWith('<button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>');
         $(".btn-delete").replaceWith('<button type="button" class="btn btn-primary btn-save">Save</button>');
@@ -96,16 +98,16 @@ function set_BTN_Defaults(){
                 // empty description on save for new edits
                 $("#modal_EventDescription").val('');
             }
-            
             // If NO description and pressed Save, prompt delete
                 // TODO:: 12/04/2021 #EP || If had a description on entry
-            else if (description_Holder == '' && $(".btn-save")) {
+            else if (description_Holder.trim() == "" && $(".btn-save")) {
+                console.log("description_Holder:",description_Holder, "and .btn-save pressed.");
                 set_BTN_Cancel();
                 set_BTN_Delete();
             }
         });
         console.log("updated btns to default")
-    }, 500);    
+    // }, 1000);    
     
 }
 
@@ -131,15 +133,26 @@ function set_BTN_Cancel(){
 function set_BTN_Delete(){
     //Replace Save and Close then create event listeners
 
-    // ALERT Warning
+    // Add ALERT Warning
     $( "#event_Message").html('<span class="alert alert-danger" role="alert"><i>Press <em class="badge badge-danger">Delete</em> to remove event.</i></span>');
     
+    // Replace save with delete
     $(".btn-save").replaceWith('<button type="button" class="btn btn-danger btn-delete" data-dismiss="modal">Delete</button>')
     
-    
+    // Add event listener
     $(".btn-delete").click(function () {
         console.log(".btn-delete");
-        set_BTN_Defaults();    
+        // hide window
+        
+        $("#add_TimeBlock_Event").modal("hide");
+
+        //wait .5 seconds then reset to defaults, so user doesn't see happen
+        setTimeout(function() {
+            set_BTN_Defaults();    
+          }, 500);
+
+        // set back to defaults
+        
     });
 }
 

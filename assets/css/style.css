@@ -1,8 +1,41 @@
+/*----------------------------------------------------------------------------*/
+/* ROOT START*/
 
+:root {
+
+  /* COLORS  */
+  --color_Primary: #172a35;
+  --color_Accent: rgb(111, 255, 233);
+  --color_Accent_75a: rgb(111, 255, 233,.75);
+  --color_shadow_025_black:  rgba(0,0,0,.25);
+
+  /* TITLE */
+  --title_Color: #fefdff;
+  --title_Font: #0b132b;
+  
+  
+  /* BACKGROUND */
+  --bg_Body: #F9F9F9; /* A very light shade of white gray */    
+  --bg_Section: #fefdff; /* A variation of white gray  */
+  
+  /* BUTTONS */
+  --btn_txt_inactive: #F9F9F9;
+  --btn_txt_active: var(--color_Accent);
+  
+  /* BOX SHADOWS */
+  --boxShadow_Top: 0 -.1rem .5rem var(--color_shadow_025_black); /* offset-x | offset-y | blur-radius | color */
+  --boxShadow_top_hover_black: 0 -.75rem 1rem var(----color_shadow_025_black); /* offset-x | offset-y | blur-radius | color */
+  --boxShadow_bottom_Inset:  inset 0px -11px 8px -10px var(--color_shadow_025_black); /* offset-x | offset-y | blur-radius | color */
+  --boxShadow_bottom_accent_Primary: 0 .01rem .5rem var(--color_Accent_Primary); /* offset-x | offset-y | blur-radius | color */
+  
+  --shadow_1px_25a: 1px solid var(--color_shadow_025_black);
+}
+
+/* :ROOT END */
 /* -------------------------------------------------------------------------- */
 /*-- EVERYTHING --*/
-body {
 
+body {
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   line-height: 1;
